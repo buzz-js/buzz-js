@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- For the font awesome icons -->
+	<script defer src="./buzz/icon/res/fontawesome.js"></script>
+	<script defer src="./buzz/icon/res/brands.js"></script>
+	<script defer src="./buzz/icon/res/solid.js"></script>
+	<script defer src="./buzz/icon/res/regular.js"></script>
+
+	<!-- Tags to add iOS support -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Buzz Web App">
+	<link rel="apple-touch-icon" href="res/icons/Icon-192.png">
+
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="favicon.png"/>
+
+	<!-- The manifest for the Web App you are building. -->
+	<link rel="manifest" href="app.webmanifest"/>
+
+	<!-- The title of the Window you are building -->
+	<title>Buzz Demo</title>
+	<!-- 
+	 --- This is the only styling included at this level and it is used to eliminate any padding and/or margin that some browsers
+	 --- would include by default. Basically, to guarantee ONLY expected behaviour while using the Buzz SDK.
+	-->
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		
+		p {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+</head>
+<body>
+	<!-- 
+		This is used by the framework to create a navigation header for your web app when it is needed.
+	-->
+	<header id="buzz-header">
+	</header>
+
+	<!-- What houses the root Widget of the entire web app. This should not be removed for any reason. -->
+	<div id="buzz-container">
+	</div>
+
+	<!-- This is used by the framework to create a footer for the web app when it is needed -->
+	<footer id="buzz-footer">
+
+	</footer>
+
+	<!-- Load the app and run it. -->
+	<script src="./src/main.js" type="module"></script>
+</body>
+</html>

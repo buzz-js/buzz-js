@@ -87,6 +87,11 @@ class Widget {
 	 * @param {AppContext} context 
 	 */
 	async postRender(context) {
+		if(this.mounted) { // After this has been rendered, shift the raw pointer to the rendered node.
+			delete this.raw;
+			this.raw = document.getElementById(this.key);
+		}
+
 		if(context.debugLevel === DEBUG_LOG) {
 			// If this widget is not the ViewHolder of the entire application
 			if(this.key !== "buzz-container") { // Write about it to the user.

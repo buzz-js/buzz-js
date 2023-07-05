@@ -72,9 +72,8 @@ class StatefulWidget extends Widget {
 	/**
 	 *
 	 * @param {StateController} controller 
-	 * @param {function(AppContext): Widget} onStateChanged 
 	 */
-	constructor(controller) {
+	constructor(controller = new StateController()) {
 		super();
 
 		this.controller = controller;

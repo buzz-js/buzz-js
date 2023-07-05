@@ -115,7 +115,7 @@ class ImageStyle extends WidgetStyle {
  */
 class ImageView extends StatelessWidget {
 	constructor(src, {
-		imageStyle = ImageStyle.stock,
+		style = ImageStyle.stock,
 		padding = null,
 		margin = null,
 		visibility = null,
@@ -124,7 +124,7 @@ class ImageView extends StatelessWidget {
 		super();
 
 		this.src = src;
-		this.imageStyle = imageStyle;
+		this.style = style;
 		this.padding = padding;
 		this.margin = margin;
 		this.visibility = visibility;
@@ -146,9 +146,9 @@ class ImageView extends StatelessWidget {
 		this.raw.style.maxWidth = '100%';
 
 		// Next, add additional information like 
-		if(this.imageStyle !== null && this.imageStyle !== undefined) {
-			this.raw.style.height = this.imageStyle.height;
-			this.raw.style.width = this.imageStyle.width;
+		if(this.style !== null && this.style !== undefined) {
+			this.raw.style.height = this.style.height;
+			this.raw.style.width = this.style.width;
 
 			// Apply the margin
 			if(this.margin !== null && this.margin !== undefined) {
@@ -166,21 +166,21 @@ class ImageView extends StatelessWidget {
 				this.raw.style.paddingRight = this.padding?.right;
 			}
 
-			if(this.imageStyle.shape === ImageGeometry.geometryCircular) {
+			if(this.style.shape === ImageGeometry.geometryCircular) {
 				this.raw.style.clipPath = "circle()";
 			}
 
-			else if(this.imageStyle.shape === ImageGeometry.geometryRectangle) {
+			else if(this.style.shape === ImageGeometry.geometryRectangle) {
 				this.raw.style.clipPath = "";
 				this.raw.style.borderRadius = "0";
 			}
 
-			else if(this.imageStyle.shape === ImageGeometry.geometryRoundedRect) {
+			else if(this.style.shape === ImageGeometry.geometryRoundedRect) {
 				this.raw.style.borderRadius = "15px";
 			}
 
 			else {
-				panic("Unexpected ImageStyle constant " + this.imageStyle.shape + " for the shape of an ImageView.", this);
+				panic("Unexpected ImageStyle constant " + this.style.shape + " for the shape of an ImageView.", this);
 			}
 		}
 
@@ -190,9 +190,12 @@ class ImageView extends StatelessWidget {
 		}
 
 		// Fit this image according to what was specified by th 
-		this.raw.style.objectFit = this.imageStyle.fit;
+		this.raw.style.objectFit = this.style.fit;
 
 		// TODO: #3 Use information from the overlay of the image
+		if(this.style.lazy) {
+			this.raw.setAttribute("loading", "lazy");
+		}
 
 		// Now, this has been mounted and then you can return its reference to the almighty renderer.
 		this.mounted = true;

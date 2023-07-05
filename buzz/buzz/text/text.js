@@ -50,12 +50,13 @@ class TextStyle extends WidgetStyle {
 	 * @param {Border} border 
 	 */
 	constructor({
-		fontColor = globalThis.buzzContext.theme.secondaryColor,
-		fontFamily = FontFamily.FONT_FAMILY_LATO,
+		fontColor = globalThis.buzzContext.theme.textTheme?.fontColor,
+		fontFamily = globalThis.buzzContext.theme.textTheme?.fontFamily,
+		fontWeight = globalThis.buzzContext.theme.textTheme?.fontWeight,
 		overflowType = null,
-		border = null,
-		borderRadius = null,
-		backgroundColor = globalThis.buzzContext.theme.primaryColor,
+		border = globalThis.buzzContext.theme.textTheme?.border,
+		borderRadius = globalThis.buzzContext.theme.textTheme?.borderRadius,
+		backgroundColor = globalThis.buzzContext.theme.textTheme?.backgroundColor,
 		height = MATCH_CONTENT,
 		width = MATCH_CONTENT
 	} = {}) {
@@ -67,6 +68,7 @@ class TextStyle extends WidgetStyle {
 
 		this.fontColor = fontColor;
 		this.fontFamily = fontFamily;
+		this.fontWeight = fontWeight;
 		this.overflowType = overflowType;
 		this.border = border;
 		this.borderRadius = borderRadius;
@@ -123,11 +125,11 @@ class Text extends StatelessWidget {
 	 */
 	constructor(text, {
 		style = null,
-		padding = null,
-		margin = null,
-		fontSize = "15px",
+		padding = globalThis.buzzContext.theme.textTheme?.padding,
+		margin = globalThis.buzzContext.theme.textTheme?.margin,
+		fontSize = globalThis.buzzContext.theme.textTheme?.fontSize,
 		maxLines = 1
-	}) {
+	}= {}) {
 		// First, call the super constructor so that it can set up everything required for
 		// fundamental widgets.
 		super();
@@ -209,6 +211,7 @@ class Text extends StatelessWidget {
 		if(this.style !== null) { // Inline styling takes the first precedent
 			this.raw.style.color 		= this.style.color;
 			this.raw.style.fontFamily 	= this.style.fontFamily;
+			this.raw.style.fontWeight 	= this.style.fontWeight;
 			this.raw.style.width 		= this.style.width;
 			this.raw.style.height 		= this.style.height;
 

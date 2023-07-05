@@ -47,7 +47,7 @@ Date Concluded:
 22. ~~Implement the ScrollableContainer widget to allow us to make scrollable screens.~~
 23. Implement TextInput Widget for different design languages, including MAD (Mile-Age Design language) that Buzz uses straight out of the box.
 24. Implement IconButton Widget
-25. Implement TextButton Widget
+25. ~~Implement TextButton Widget~~
 26. Implement ProgressIndicator, CircularProgressIndicator, and LinearProgressIndicator widgets.
 27. Implement ProgressButton Widget
 28. ~~Implement an abstraction that makes it easy to write CSS-dimensions in Buzz.js~~

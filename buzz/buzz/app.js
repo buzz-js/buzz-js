@@ -3,7 +3,6 @@ import { Widget } from './framework/widget.js';
 import { View } from './render/view.js';
 import { AppContext } from './framework/context.js';
 import { AppTheme, ButtonTheme, EditTextTheme, TextTheme } from "./style/theme.js";
-import { Colors } from './style/color.js';
 import { StatefulWidget } from './framework/state.js';
 import { Route, Router } from './navigator/router.js';
 import { NavigationAnchor, NavigationController } from './navigator/anchor.js';
@@ -65,11 +64,11 @@ class BuzzApp {
 		
 			// Now craft your application's theme.
 			theme ?? new AppTheme(
-				Colors.black, {
-				primaryColor: Colors.black,
-				secondaryColor: Colors.black,
-				accentColor: Colors.yellow,
-				backgroundColor: Colors.white,
+				'black', {
+				primaryColor: 'black',
+				secondaryColor: 'black',
+				accentColor: 'yellow',
+				backgroundColor: 'white',
 				textTheme: new TextTheme(),
 				editTextTheme: new EditTextTheme(),
 				buttonTheme: new ButtonTheme()
@@ -189,17 +188,22 @@ function run(app) {
 
 document.addEventListener("click", function (event) {
 	/** @type {Element} The key of the element that is being clicked. */
-	const key = event.target.id;
+	var key = event.target.id;
 
 	// Time to retrieve the element from the registry.
-	const widget = globalThis.buzzWidgetDirectory[key];
+	var widget = globalThis.buzzWidgetDirectory[key];
 
-	if(!widget || !widget.clickable) {
-		return; // Don't bother if this widget is not clickable from Buzz Context.
+	if(!widget) {
+		return;
+	}
+
+	while(!widget.clickable) {
+		widget = widget.parent;
+		key = widget.key;
 	}
 
 	if(widget.enabled) {
-		widget.onClick?.call();
+		widget.onClick();
 	}
 });
 
@@ -316,7 +320,7 @@ document.addEventListener("buzz-frame-update", function (event) {
 		rendered = rendered.render(parent);
 
 		// If this failed for whatever reason
-		if(rendered === null || rendered === undefined) {
+		if(!rendered) {
 			throw("Attempted to rendering an undefined widget. Cannot pass null or undefined as the result for render.");
 		}
 
@@ -332,7 +336,7 @@ document.addEventListener("buzz-frame-update", function (event) {
 	// Next, locate the HTML node that is represented by the Widget in question.
 	const widget = document.getElementById(key);
 
-	if(widget === null || widget === undefined) {
+	if(!widget) {
 		throw("Unable to locate any widget with the ID " + key + " therefore it was impossible to update. This might have happened because this Widget has been detached from the render tree. Before you call invalidate, you are advised to make sure the StatefulWidget you are invalidating is still mounted.");
 	}
 

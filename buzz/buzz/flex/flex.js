@@ -101,6 +101,8 @@ class Flex extends Container {
 			height: MATCH_CONTENT,
 			width: MATCH_CONTENT
 		}),
+		margin = undefined,
+		padding = undefined,
 		wrap = false,
 		mainAxisAlignment = FlexAlignment.start,
 		crossAxisAlignment = FlexAlignment.center,
@@ -118,6 +120,8 @@ class Flex extends Container {
 		this.mainAxisAlignment = mainAxisAlignment;
 		this.crossAxisAlignment = crossAxisAlignment;
 		this.contentAlignment = contentAlignment;
+		this.margin = margin;
+		this.padding = padding;
 
 		// Next it is time to create the HTML Element for this dude.
 		this.raw 	= document.createElement("div");

@@ -10,6 +10,7 @@ class TextButtonStyle extends TextStyle {
 		fontFamily = globalThis.buzzContext.theme.buttonTheme?.fontFamily,
 		border = globalThis.buzzContext.theme.buttonTheme?.border,
 		fontSize = globalThis.buzzContext.theme.buttonTheme?.fontSize,
+		fontWeight = globalThis.buzzContext.theme.buttonTheme?.fontWeight,
 		borderRadius = globalThis.buzzContext.theme.buttonTheme?.borderRadius,
 		backgroundColor = globalThis.buzzContext.theme.buttonTheme?.backgroundColor,
 		backgroundColorDisabled = globalThis.buzzContext.theme.buttonTheme?.backgroundColorDisabled,
@@ -37,6 +38,7 @@ class TextButtonStyle extends TextStyle {
 		this.fontColorHover = fontColorHover;
 		this.padding = padding;
 		this.fontSize = fontSize;
+		this.fontWeight = fontWeight;
 	}
 }
 
@@ -69,20 +71,26 @@ class TextButton extends StatelessWidget {
 		// This is to style the button first and assign its defaults.
 		this.text       = text;
 		this.style      = style;
-		this.onClick    = onClick;
+		this.onClick    = function() {
+			if(onClick) onClick();
+		};
 		this.onHover    = function(hovering) {
+			delete this.raw;
+			this.raw = document.getElementById(this.key);
+
 			if(hovering) {	
-				document.getElementById(this.key).style.background 	= this.style.backgroundColorHover;
-				document.getElementById(this.key).style.color		= this.style.fontColorHover;
+				this.raw.style.background 	= this.style.backgroundColorHover;
+				this.raw.style.color		= this.style.fontColorHover;
 			}
 
 			else {
-				document.getElementById(this.key).style.background 	= this.style.backgroundColor;
-				document.getElementById(this.key).style.color		= this.style.fontColor;
+				this.raw.style.background 	= this.style.backgroundColor;
+				this.raw.style.color		= this.style.fontColor;
 			}
 
-			// Now 
-			onHover(hovering);
+			// Now call the hovering function for this guy.
+			if(onHover)  // If it is bound
+				onHover(hovering);
 		}
 		this.onDoubleClick= onDoubleClick;
 		this.enabled    = enabled;
@@ -127,8 +135,11 @@ class TextButton extends StatelessWidget {
 			this.raw.style.marginRight 	= this.margin?.right;
 		}
 
-		// Now the font size.
+		// Now the font style
 		this.raw.style.fontSize 		= this.style.fontSize;
+		this.raw.style.fontWeight		= this.style.fontWeight;
+		this.raw.style.fontFamily		= this.style.fontFamily;
+
 
 		if(this.style.padding) {
 			this.raw.style.paddingTop 	= this.style.padding?.top;
@@ -161,4 +172,5 @@ class TextButton extends StatelessWidget {
 
 export {
 	TextButton,
+	TextButtonStyle
 }

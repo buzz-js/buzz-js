@@ -7,7 +7,7 @@ class MyApp extends BuzzApp {
 	constructor() {
 		super({
 			defaultRoute: '/',
-			debugLevel: DEBUG_NONE,
+			debugLevel: DEBUG_LOG,
 			router: myAppRouter
 		});
 	}

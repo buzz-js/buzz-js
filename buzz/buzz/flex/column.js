@@ -25,6 +25,8 @@ class Column extends Flex {
 			height: MATCH_CONTENT,
 			width: MATCH_CONTENT
 		}),
+		margin = undefined,
+		padding = undefined,
 		mainAxisAlignment = FlexAlignment.start,
 		crossAxisAlignment = FlexAlignment.center,
 	} = {}) {
@@ -32,6 +34,8 @@ class Column extends Flex {
 			children: children,
 			reversed: reversed,
 			style: style,
+			margin: margin,
+			padding: padding,
 			mainAxisAlignment: mainAxisAlignment,
 			crossAxisAlignment: crossAxisAlignment,
 		});

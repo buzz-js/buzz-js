@@ -1,3 +1,4 @@
+import { ContainerStyle } from "../framework/container.js";
 import { Colors } from "../style/color.js";
 import { MATCH_CONTENT } from "../style/style.js";
 import { Flex, FlexAlignment } from "./flex.js";
@@ -15,6 +16,8 @@ class Row extends Flex {
 	constructor({
 		children = null,
 		reversed = false,
+		margin = undefined,
+		padding = undefined,
 		style = new ContainerStyle({
 			backgroundColor: Colors.transparent,
 			height: MATCH_CONTENT,
@@ -27,6 +30,8 @@ class Row extends Flex {
 			children: children,
 			reversed: reversed,
 			style: style,
+			margin: margin,
+			padding: padding,
 			mainAxisAlignment: mainAxisAlignment,
 			crossAxisAlignment: crossAxisAlignment,
 		});

@@ -424,6 +424,9 @@ class Container extends StatelessWidget {
 			panic("Attempted to render the children of a Widget before it's HTML viewport had been created.", this);
 		}
 
+		// Replace all the children with a very blank array first.
+		this.raw.replaceChildren([]);
+
 		// After that, we attempt to render your child.
 		// Finally, if this widget was created with its list of children, we build the children and place them inside the container.
 		if(this.children) {

@@ -1,5 +1,6 @@
 import { SingleChildContainer } from '../framework/container.js';
 import { visibilityCheck } from '../framework/utilities.js';
+import { View } from '../render/view.js';
 
 class ActionController extends SingleChildContainer {
 	/**
@@ -34,14 +35,23 @@ class ActionController extends SingleChildContainer {
 		super(child);
 
 		// Bind the values that matter to an interaction controller
-		this.onClick = onClick;
+		this.onClick = () => {
+			console.log("Clicked Action Controller: " + this.key);
+			
+			if(onClick) 
+				onClick();
+		}
 		this.onDoubleClick = onDoubleClick;
-		this.onHover = onHover;
+		this.onHover = (hovering) => { 
+			if(onHover) 
+				onHover(hovering);
+		}
 		this.clickable = true;
 		this.enabled = enabled;
 
 		// Create the HTML viewport for this Widget
 		this.raw = document.createElement("div");
+		this.raw.classList.add("buzz-button-clickable")
 		this.raw.id = this.key; // Assign the right ID to this Widget.
 
 		// Next, create the viewport for this Widget.
@@ -64,8 +74,6 @@ class ActionController extends SingleChildContainer {
 			// For desktop devices
 			delete this.raw.onmouseenter;
 			delete this.raw.onmouseleave;
-
-			// Thinking of a mobile implementation soon.
 		}
 	}
 

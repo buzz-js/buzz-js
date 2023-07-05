@@ -50,7 +50,14 @@ class IconButton extends StatelessWidget {
     render(parent) {
         super.render(parent);
 
-        
+		// First, apply the styles that are general to these lads.
+		this.applyStyle();
+
+		
+
+		// Mount this lad and then report this operation to the user.
+		this.mounted = true;
+		return this;
     }
 }
 

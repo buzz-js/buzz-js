@@ -187,7 +187,7 @@ function run(app) {
 }
 
 document.addEventListener("click", function (event) {
-	/** @type {Element} The key of the element that is being clicked. */
+	/** @type {Element} The key of the element that is being interacted with. */
 	var key = event.target.id;
 
 	// Time to retrieve the element from the registry.
@@ -198,6 +198,10 @@ document.addEventListener("click", function (event) {
 	}
 
 	while(!widget.clickable) {
+		if(!widget.parent) { // If this is definitely not a Buzz Widget...
+			return;
+		}
+
 		widget = widget.parent;
 		key = widget.key;
 	}
@@ -208,14 +212,23 @@ document.addEventListener("click", function (event) {
 });
 
 document.addEventListener("auxclick", function (event) {
-	/** @type {Element} The key of the element that is being clicked. */
-	const key = event.target.id;
+	/** @type {Element} The key of the element that is being interacted with. */
+	var key = event.target.id;
 
 	// Time to retrieve the element from the registry.
-	const widget = globalThis.buzzWidgetDirectory[key];
+	var widget = globalThis.buzzWidgetDirectory[key];
 
-	if(!widget || !widget.clickable) {
-		return; // Don't bother if this widget is not clickable from Buzz Context.
+	if(!widget) {
+		return;
+	}
+
+	while(!widget.clickable) {
+		if(!widget.parent) { // If this is definitely not a BUzz Widget.
+			return;
+		}
+
+		widget = widget.parent;
+		key = widget.key;
 	}
 
 	// Call the double click event.
@@ -225,14 +238,23 @@ document.addEventListener("auxclick", function (event) {
 });
 
 document.addEventListener("mouseover", function (event) {
-	/** @type {Element} The key of the element that is being clicked. */
-	const key = event.target.id;
+	/** @type {Element} The key of the element that is being interacted with. */
+	var key = event.target.id;
 
 	// Time to retrieve the element from the registry.
-	const widget = globalThis.buzzWidgetDirectory[key];
+	var widget = globalThis.buzzWidgetDirectory[key];
 
-	if(!widget || !widget.clickable) {
-		return; // Don't bother if this widget is not clickable from Buzz Context.
+	if(!widget) {
+		return;
+	}
+
+	while(!widget.clickable) {
+		if(!widget.parent) { // If this is not a buzz widget
+			return; // Just go back.
+		}
+
+		widget = widget.parent;
+		key = widget.key;
 	}
 
 	if(widget instanceof Widget && widget.enabled) {
@@ -241,14 +263,23 @@ document.addEventListener("mouseover", function (event) {
 });
 
 document.addEventListener("mouseout", function(event) {
-	/** @type {Element} The key of the element that is being clicked. */
-	const key = event.target.id;
+	/** @type {Element} The key of the element that is being interacted with. */
+	var key = event.target.id;
 
 	// Time to retrieve the element from the registry.
-	const widget = globalThis.buzzWidgetDirectory[key];
+	var widget = globalThis.buzzWidgetDirectory[key];
 
-	if(!widget || !widget.clickable) {
-		return; // Don't bother if this widget is not clickable from Buzz Context.
+	if(!widget) {
+		return;
+	}
+
+	while(!widget.clickable) {
+		if(!widget.parent) {
+			return;
+		}
+
+		widget = widget.parent;
+		key = widget.key;
 	}
 
 	if(widget instanceof Widget && widget.enabled) {

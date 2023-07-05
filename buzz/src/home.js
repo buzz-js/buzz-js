@@ -87,7 +87,9 @@ class HomePage extends StatefulWidget {
 								onClick: () => {
 									alert("Register User...")
 								},
-								onHover: () => alert("Meh...")
+								onHover: function (value) { 
+									console.log(value ? "Meh..." : "NO!");
+								}
 							})
 						]}
 					),

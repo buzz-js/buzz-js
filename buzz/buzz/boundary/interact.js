@@ -61,20 +61,9 @@ class ActionController extends SingleChildContainer {
 	remove(context) {
 		super.unmount(context);
 
-		// When removing this Widget from the tree...
-		if(this.onClick !== null && this.onClick !== undefined) {
-			delete this.raw.onclick;
-		}
-
-		if(this.onDoubleClick !== null && this.onDoubleClick !== undefined) {
-			delete this.raw.ondblclick;
-		}
-
-		if(this.onHover !== null && this.onHover !== undefined) {
-			// For desktop devices
-			delete this.raw.onmouseenter;
-			delete this.raw.onmouseleave;
-		}
+		delete this.onClick;
+		delete this.onDoubleClick;
+		delete this.onHover;
 	}
 
 	render(parent) {

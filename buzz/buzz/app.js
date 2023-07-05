@@ -187,6 +187,71 @@ function run(app) {
 	defaultPage.postRender(app.context);
 }
 
+document.addEventListener("click", function (event) {
+	/** @type {Element} The key of the element that is being clicked. */
+	const key = event.target.id;
+
+	// Time to retrieve the element from the registry.
+	const widget = globalThis.buzzWidgetDirectory[key];
+
+	if(!widget || !widget.clickable) {
+		return; // Don't bother if this widget is not clickable from Buzz Context.
+	}
+
+	if(widget.enabled) {
+		widget.onClick?.call();
+	}
+});
+
+document.addEventListener("auxclick", function (event) {
+	/** @type {Element} The key of the element that is being clicked. */
+	const key = event.target.id;
+
+	// Time to retrieve the element from the registry.
+	const widget = globalThis.buzzWidgetDirectory[key];
+
+	if(!widget || !widget.clickable) {
+		return; // Don't bother if this widget is not clickable from Buzz Context.
+	}
+
+	// Call the double click event.
+	if(widget.enabled) {
+		widget.onDoubleClick?.call();
+	}
+});
+
+document.addEventListener("mouseover", function (event) {
+	/** @type {Element} The key of the element that is being clicked. */
+	const key = event.target.id;
+
+	// Time to retrieve the element from the registry.
+	const widget = globalThis.buzzWidgetDirectory[key];
+
+	if(!widget || !widget.clickable) {
+		return; // Don't bother if this widget is not clickable from Buzz Context.
+	}
+
+	if(widget instanceof Widget && widget.enabled) {
+		widget.onHover(true);
+	}
+});
+
+document.addEventListener("mouseout", function(event) {
+	/** @type {Element} The key of the element that is being clicked. */
+	const key = event.target.id;
+
+	// Time to retrieve the element from the registry.
+	const widget = globalThis.buzzWidgetDirectory[key];
+
+	if(!widget || !widget.clickable) {
+		return; // Don't bother if this widget is not clickable from Buzz Context.
+	}
+
+	if(widget instanceof Widget && widget.enabled) {
+		widget.onHover(false);
+	}
+});
+
 // Next, we add the even dispatch listener for UI layer updates.
 document.addEventListener("buzz-frame-update", function (event) {
 	/** @type {StatefulWidget} */

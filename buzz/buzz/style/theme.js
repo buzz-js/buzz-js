@@ -64,23 +64,29 @@ class TextTheme extends ThemeData {
 	fontFamily;
 
 	/**
-	 * 
-	 * @param {string} fontColor 
-	 * @param {string} iconColor 
-	 * @param {RadialGeometry} borderRadius 
-	 * @param {Border} border 
-	 * @param {InsetsGeometry} padding 
-	 * @param {InsetsGeometry} margin 
-	 * @param {style} fontFamily 
+	 * Should be italic or such another constant you'd see in CSS.
+	 * @type {string}
 	 */
+	fontStyle;
+
+	/**
+	 * Should be a valid CSS weight.
+	 * @param {string}
+	 */
+	fontWeight;
+
 	constructor({
 		fontColor = Colors.black,
 		iconColor = Colors.black,
-		borderRadius = RadialGeometry.empty,
+		fontSize =  '1em',
+		borderRadius = RadialGeometry.all('1em'),
 		border = Border.none,
-		padding = InsetsGeometry.all("5px"),
+		padding = InsetsGeometry.all('10px'),
 		margin = InsetsGeometry.zero,
-		fontFamily = FontFamily.FONT_FAMILY_LATO
+		fontFamily = FontFamily.FONT_FAMILY_LATO,
+		fontStyle = 'none',
+		fontWeight = 'normal',
+		backgroundColor = Colors.yellow,
 	} = {}) {
 		super(fontColor, iconColor);
 
@@ -89,16 +95,60 @@ class TextTheme extends ThemeData {
 		this.padding = padding;
 		this.margin = margin;
 		this.fontFamily = fontFamily;
+		this.fontStyle = fontStyle;
+		this.fontWeight = fontWeight;
+		this.backgroundColor = backgroundColor;
+		this.fontSize = fontSize;
 	}
 }
 
 class ButtonTheme extends TextTheme {
-	/**
-	 * 
-	 *
-	 * @type {string}
-	 */
-	infoTextColor;
+	fontColorDisabled;
+	backgroundColorDisabled;
+	textStyleDisabled;
+	textDecorationDisabled;
+
+	constructor({
+		fontColor = Colors.black,
+		iconColor = Colors.black,
+		borderRadius = RadialGeometry.all('10px'),
+		border = Border.none,
+		padding = new InsetsGeometry().setHorizontal("20px").setVertical("10px"),
+		margin = InsetsGeometry.zero,
+		fontFamily = FontFamily.FONT_FAMILY_LATO,
+		fontStyle = 'none',
+		fontWeight = 'normal',
+		fontSize = '0.8em',
+		fontColorDisabled = "#000",
+		backgroundColorDisabled = "#777777",
+		backgroundColorHover = "black",
+		fontColorHover = "yellow",
+		backgroundColor = Colors.yellow,
+		textStyleDisabled = "none",
+		textDecorationDisabled = "none",
+	} = {}) {
+		super({
+			fontColor: fontColor,
+			iconColor: iconColor,
+			borderRadius: borderRadius,
+			border: border,
+			padding: padding,
+			margin: margin,
+			fontFamily: fontFamily,
+			fontStyle: fontStyle,
+			fontWeight: fontWeight,
+			fontSize: fontSize,
+			backgroundColor: backgroundColor
+		});
+
+		// Now for the button specialties. 
+		this.fontColorDisabled = fontColorDisabled;
+		this.backgroundColorDisabled = backgroundColorDisabled;
+		this.textStyleDisabled = textStyleDisabled;
+		this.textDecorationDisabled = textDecorationDisabled;
+		this.backgroundColorHover = backgroundColorHover;
+		this.fontColorHover = fontColorHover;
+	}
 }
 
 class EditTextTheme extends ThemeData {
@@ -163,15 +213,14 @@ class AppTheme extends ThemeData {
 
 	constructor(
 		fontColor = Colors.black,{
-			primaryColor = Colors.black, 
-			secondaryColor = Colors.black,
-			accentColor = Colors.black,  
-			backgroundColor = Colors.white,
-			textTheme = new TextTheme(),
-			editTextTheme = new EditTextTheme(),
-			buttonTheme = new ButtonTheme() 
-		} = {}
-	) {
+		primaryColor = Colors.black, 
+		secondaryColor = Colors.yellow,
+		accentColor = Colors.black,  
+		backgroundColor = Colors.white,
+		textTheme = new TextTheme(),
+		editTextTheme = new EditTextTheme(),
+		buttonTheme = new ButtonTheme() 
+	} = {}) {
 		super(fontColor, accentColor);
 		this.primaryColor = primaryColor;
 		this.secondaryColor = secondaryColor;

@@ -50,12 +50,12 @@ class TextStyle extends WidgetStyle {
 	 * @param {Border} border 
 	 */
 	constructor({
-		fontColor = 'inherit',
+		fontColor = globalThis.buzzContext.theme.secondaryColor,
 		fontFamily = FontFamily.FONT_FAMILY_LATO,
 		overflowType = null,
 		border = null,
 		borderRadius = null,
-		backgroundColor = 'inherit',
+		backgroundColor = globalThis.buzzContext.theme.primaryColor,
 		height = MATCH_CONTENT,
 		width = MATCH_CONTENT
 	} = {}) {
@@ -160,6 +160,9 @@ class Text extends StatelessWidget {
 	 */
 	render(parent) {
 		super.render(parent);
+
+		// The context first.
+		const context = globalThis.buzzContext;
 
 		// If this has not been built before which is technically impossible...
 		if(this.visibility === VISIBLE && this.raw.style.display === "none") {

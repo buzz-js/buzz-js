@@ -61,18 +61,16 @@ class InsetsGeometry {
 		return value;
 	}
 
-	static horizontal(both) {
-		const value = new InsetsGeometry();
-		value.left = both;
-		value.right = both;
-		return value;
+	setHorizontal(both) {
+		this.left = both;
+		this.right = both;
+		return this;
 	}
 
-	static vertical(both) {
-		const value = new InsetsGeometry();
-		value.top = both;
-		value.bottom = both;
-		return value;
+	setVertical(both) {
+		this.top = both;
+		this.bottom = both;
+		return this;
 	}
 }
 

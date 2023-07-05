@@ -28,7 +28,8 @@ class ActionController extends SingleChildContainer {
 	constructor(child, {
 		onClick = null,
 		onHover = null,
-		onDoubleClick = null
+		onDoubleClick = null,
+		enabled = true,
 	} = {}) {
 		super(child);
 
@@ -36,11 +37,12 @@ class ActionController extends SingleChildContainer {
 		this.onClick = onClick;
 		this.onDoubleClick = onDoubleClick;
 		this.onHover = onHover;
+		this.clickable = true;
+		this.enabled = enabled;
 
 		// Create the HTML viewport for this Widget
 		this.raw = document.createElement("div");
 		this.raw.id = this.key; // Assign the right ID to this Widget.
-		this.raw
 
 		// Next, create the viewport for this Widget.
 		this.viewport = new View(this.raw);
@@ -72,35 +74,6 @@ class ActionController extends SingleChildContainer {
 
 		// This should be flexible so we render the contents directly.
 		visibilityCheck(this, 'contents');
-
-		// Fine, by me.
-		if(this.onClick !== null && this.onClick !== undefined) {
-			const current = this;
-
-			// Now we would try to guess something here.
-			this.raw.onclick = function(event) {
-				current.onClick(event.ctrlKey, event.shiftKey, event.altKey, event.metaKey);
-			};
-		}
-
-		if(this.onDoubleClick !== null && this.onDoubleClick !== undefined) {
-			const current = this;
-
-			// Now we would try to guess something here.
-			this.raw.ondblclick = function(event) {
-				current.onDoubleClick(event.ctrlKey, event.shiftKey, event.altKey, event.metaKey);
-			};
-		}
-
-		if(this.onHover !== null && this.onHover !== undefined) {
-			const current = this;
-
-			// For desktop devices
-			this.raw.onmouseenter = (event)  => current.onHover(true);
-			this.raw.onmouseleave = (event)  => current.onHover(false);
-
-			// Thinking of a mobile implementation soon.
-		}
 
 		// Now, render its child.
 		this.renderChild();

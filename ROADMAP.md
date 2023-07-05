@@ -37,30 +37,29 @@ Date Concluded:
 12. ~~Create the classes that handle radial and linear space. InsetsGeometry and RadialGeometry~~
 13. ~~Create the base class for Container-type Widgets~~
 14. ~~Properly define the application Running System~~
-15. Create a static class that contains all CSS colors.
-16. ~~Create abstractions for borders and border radius~~
-17. ~~Create helper functions to apply borders and border radius~~
-18. ~~Implement Text Widgets~~
-19. ~~Implement Text Overflows that include ellipsis~~
-20. ~~Implement the ImageView and SvgImageView widgets for displaying images.~~
-21. Implement the VideoView widget for displaying videos (this would be rather difficult to do desirably).
-22. ~~Implement the SizedBox widget for constraining the Size of its child~~
-23. ~~Implement the ScrollableContainer widget to allow us to make scrollable screens.~~
-24. Implement TextInput Widget for different design languages, including MAD (Mile-Age Design language) that Buzz uses straight out of the box.
-25. Implement ImageButton Widget
-26. Implement TextButton Widget
-27. Implement ProgressIndicator, CircularProgressIndicator, and LinearProgressIndicator widgets.
-28. Implement ProgressButton Widget
-29. ~~Implement an abstraction that makes it easy to write CSS-dimensions in Buzz.js~~
-30. ~~Implement ActionController widget to add input functionality to otherwise uneventful Widgets~~
-31. ~~Implement the Router, NavigationController, and NavigationAnchor classes so we would be able to switch the context of the page~~
-32. ~~Implement the ColoredBox so that it would be possible to create boxes that just have concept of color~~
-33. Implement animations and animation controllers to make everything more lively.
-34. ~~Implement the flexbox widgets Flex, Column, Row, Wrap, and Flexible.~~
-35. ~~Implement the Free font awesome icons~~
-36. ~~Implement the Icon widget.~~
-37. ~~Implement Icon Animation~~
-38. Implement the PageView Widget
+15. ~~Create abstractions for borders and border radius~~
+16. ~~Create helper functions to apply borders and border radius~~
+17. ~~Implement Text Widgets~~
+18. ~~Implement Text Overflows that include ellipsis~~
+29. ~~Implement the ImageView and SvgImageView widgets for displaying images.~~
+20. Implement the VideoView widget for displaying videos (this would be rather difficult to do desirably).
+21. ~~Implement the SizedBox widget for constraining the Size of its child~~
+22. ~~Implement the ScrollableContainer widget to allow us to make scrollable screens.~~
+23. Implement TextInput Widget for different design languages, including MAD (Mile-Age Design language) that Buzz uses straight out of the box.
+24. Implement IconButton Widget
+25. Implement TextButton Widget
+26. Implement ProgressIndicator, CircularProgressIndicator, and LinearProgressIndicator widgets.
+27. Implement ProgressButton Widget
+28. ~~Implement an abstraction that makes it easy to write CSS-dimensions in Buzz.js~~
+29. ~~Implement ActionController widget to add input functionality to otherwise uneventful Widgets~~
+30. ~~Implement the Router, NavigationController, and NavigationAnchor classes so we would be able to switch the context of the page~~
+31. ~~Implement the ColoredBox so that it would be possible to create boxes that just have concept of color~~
+32. Implement animations and animation controllers to make everything more lively.
+33. ~~Implement the flexbox widgets Flex, Column, Row, Wrap, and Flexible.~~
+34. ~~Implement the Free font awesome icons~~
+35. ~~Implement the Icon widget.~~
+36. ~~Implement Icon Animation~~
+37. Implement the PageView Widget
 
 # Phase 2 Goals :soccer::trophy:
 

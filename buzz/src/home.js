@@ -9,9 +9,10 @@ import { Alignment } from "../buzz/alignment/alignment.js";
 import { Column } from "../buzz/flex/column.js";
 import { SizedBox } from '../buzz/box/sized.js';
 import { Icon, IconAnimation } from '../buzz/icon/icon.js';
-import { BrandIcons, SolidIcons } from '../buzz/icon/data.js';
+import { BrandIcons } from '../buzz/icon/data.js';
 import { ImageFit, ImageGeometry, ImageStyle, ImageView } from "../buzz/image/image.js";
 import { AnimationController } from "../buzz/animation/anim.js";
+import { TextButton } from "../buzz/button/text.js"
 
 class HomePage extends StatefulWidget {
 	/**
@@ -131,6 +132,10 @@ class HomePage extends StatefulWidget {
 						})
 					}),
 
+					new SizedBox({
+						height: '10px'
+					}),
+
 					new Icon(BrandIcons.github, {
 						size: '2em',
 						animation: new IconAnimation(
@@ -155,7 +160,26 @@ class HomePage extends StatefulWidget {
 							}
 						),
 						color: '#090958',
-					})
+					}),
+
+
+					new SizedBox({
+						height: '70px'
+					}),
+
+					new TextButton(
+						"Submit?",{
+							onClick: function () {
+								alert("This is fine. The button WAS clicked after all.")
+							},
+							onHover: function(value) {
+								console.log(value ? "Mouse entered" : "Mouse left");
+							},
+							onDoubleClick: function() {
+								console.log("Mouse double clicking this thing.");
+							}
+						}
+					)
 				]
 			})
 		});

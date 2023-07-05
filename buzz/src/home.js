@@ -9,7 +9,8 @@ import { Column } from "../buzz/flex/column.js";
 import { Row } from "../buzz/flex/row.js";
 import { Icon } from '../buzz/icon/icon.js';
 import { ActionController } from '../buzz/boundary/interact.js';
-import { SolidIcons } from '../buzz/icon/data.js';
+import { RegularIcons, SolidIcons } from '../buzz/icon/data.js';
+import { IconButton } from '../buzz/button/icon.js'; 
 import { ImageFit, ImageGeometry, ImageStyle, ImageView } from "../buzz/image/image.js";
 import { TextButton, TextButtonStyle } from "../buzz/button/text.js"
 
@@ -32,6 +33,23 @@ class HomePage extends StatefulWidget {
 								fontColor: 'black',
 								fontWeight: 'bolder',
 							})
+						}
+					),
+
+					new IconButton(
+						new Icon(
+							RegularIcons.calendarCheck, {
+								size: '2em',
+								color: 'yellow',
+							}
+						), {
+							onClick: () => {
+								alert("So, it works");
+							},
+
+							onHover: (hovering) => {
+								console.log(hovering ? "Still on top" : "Not on top");
+							}
 						}
 					),
 

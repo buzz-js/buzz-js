@@ -197,7 +197,7 @@ class Widget {
 		this.visibility = VISIBLE;
 		this.mounted = false;
 
-		if(this.raw === null || this.raw === undefined) {
+		if(!this.raw) {
 			panic("At this point in time, a widget should have been initialized successfully");
 		}
 

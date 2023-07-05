@@ -58,8 +58,8 @@ Date Concluded:
 33. Implement animations and animation controllers to make everything more lively.
 34. ~~Implement the flexbox widgets Flex, Column, Row, Wrap, and Flexible.~~
 35. ~~Implement the Free font awesome icons~~
-36. Implement the Icon widget.
-37. Implement Icon Animation
+36. ~~Implement the Icon widget.~~
+37. ~~Implement Icon Animation~~
 38. Implement the PageView Widget
 
 # Phase 2 Goals :soccer::trophy:

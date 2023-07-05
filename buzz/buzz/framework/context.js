@@ -55,7 +55,7 @@ class AppContext {
 		this.theme = theme;
 		this.debugLevel = 0;
 
-		if(globalThis.buzzContext !== null && globalThis.buzzContext !== undefined) {
+		if(globalThis.buzzContext) {
 			throw("Attempted to create another context inside an app. An app can only have one context running at at time.");
 		}
 

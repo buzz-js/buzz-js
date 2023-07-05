@@ -45,12 +45,12 @@ class SingleChildContainer extends StatelessWidget {
 	 * be insufficient.
 	 */
 	applyStyle(canFlex = true) {
-		if(this.raw === null || this.raw === undefined) {
+		if(!this.raw) {
 			panic("Attempted to call applyStyle on a container that is no longer mounted.", this);
 		}
 
 		// Set the padding for the child view.
-		if(this.padding !== null && this.padding !== undefined) {
+		if(this.padding) {
 			this.raw.style.paddingTop 	= this.padding?.top;
 			this.raw.style.paddingBottom= this.padding?.bottom;
 			this.raw.style.paddingLeft 	= this.padding?.left;
@@ -58,7 +58,7 @@ class SingleChildContainer extends StatelessWidget {
 		}
 
 		// Next, set the margin for the child view.
-		if(this.margin !== null && this.margin !== undefined) {
+		if(this.margin) {
 			this.raw.style.marginTop 	= this.margin?.top;
 			this.raw.style.marginBottom	= this.margin?.bottom;
 			this.raw.style.marginLeft 	= this.margin?.left;
@@ -66,7 +66,7 @@ class SingleChildContainer extends StatelessWidget {
 		}
 
 		// Then we check for styling.
-		if(this.style !== null && this.style !== undefined) {
+		if(this.style) {
 			this.raw.style.backgroundColor 	= this.style.backgroundColor; // First, set the background Color
 			this.raw.style.height 			= this.style.height;
 			this.raw.style.width 			= this.style.width;
@@ -141,7 +141,7 @@ class SingleChildContainer extends StatelessWidget {
 				}
 
 				// After performing this switch out... check if this alignment was forced to sit at some baseline.
-				if(this.style.alignment !== null && this.style.alignment !== undefined) {
+				if(this.style.alignment) {
 					if(this.style.alignment.forced) {
 						this.raw.style.alignItems = "baseline";
 					}
@@ -154,17 +154,17 @@ class SingleChildContainer extends StatelessWidget {
 				}
 			}
 
-			if(this.style.shadow !== null && this.style.shadow !== undefined) {
+			if(this.style.shadow) {
 				this.raw.style.boxShadow = this.style.shadow.toStylesheet();
 			}
 
-			if(this.style.border !== null && this.style.border !== undefined) {
+			if(this.style.border) {
 				this.raw.style.borderWidth = this.style.border?.lineWidth;
 				this.raw.style.borderColor = this.style.border?.color;
 				this.raw.style.borderStyle = this.style.border?.lineType;
 			}
 
-			if(this.style.borderRadius !== null && this.style.borderRadius !== undefined) {
+			if(this.style.borderRadius) {
 				this.raw.style.borderTopLeftRadius 		= this.style.borderRadius?.topLeft;
 				this.raw.style.borderTopRightRadius 	= this.style.borderRadius?.topRight;
 				this.raw.style.borderBottomLeftRadius 	= this.style.borderRadius?.bottomLeft;
@@ -186,21 +186,21 @@ class SingleChildContainer extends StatelessWidget {
 	 * Otherwise, it MIGHT lead to unexpected behavior, and in some worst case scenarios, it could even break your app's runtime. 
 	 */
 	renderChild() {
-		if(this.raw === null || this.raw === undefined) {
+		if(!this.raw) {
 			panic("Attempted to render the child of a Widget before it's HTML viewport had been created.", this);
 		}
 
 		// After that, we attempt to render your child.
 		// Finally, if this widget was created with a child, we build the child and place it inside the container.
-		if(this.child !== null && this.child !== undefined) {
+		if(this.child) {
 			let widget = this.child.render(this); // First we render this child
 
 			// Next, if the child is not built yet... meaning this is not a Widget that is directly drawn.
 			// This means that the Widget in question is a ghost widget, hence not drawn. This is a necessary
 			// optimization so the HTML viewport is not filled with unnecessary views.
-			while(!widget.mounted) {
+			while(!widget || !widget.mounted) {
 				// Stop if at some point things just begin to get weird.
-				if(widget === null || widget === undefined) {
+				if(!widget) {
 					throw("Attempted to rendering an undefined widget. Cannot pass null or undefined as the result for render.");
 				}
 
@@ -279,12 +279,12 @@ class Container extends StatelessWidget {
 	 * be insufficient.
 	 */
 	applyStyle(canFlex = true) {
-		if(this.raw === null || this.raw === undefined) {
+		if(!this.raw) {
 			throw("Attempted to call applyStyle on a container that is no longer mounted.\nThe problematic widget is a " + this.constructor.name + " with the key " + this.key);
 		}
 
 		// Set the padding for the child view.
-		if(this.padding !== null && this.padding !== undefined) {
+		if(this.padding) {
 			this.raw.style.paddingTop 	= this.padding?.top;
 			this.raw.style.paddingBottom= this.padding?.bottom;
 			this.raw.style.paddingLeft 	= this.padding?.left;
@@ -292,7 +292,7 @@ class Container extends StatelessWidget {
 		}
 
 		// Next, set the margin for the child view.
-		if(this.margin !== null && this.margin !== undefined) {
+		if(this.margin) {
 			this.raw.style.marginTop 	= this.margin?.top;
 			this.raw.style.marginBottom	= this.margin?.bottom;
 			this.raw.style.marginLeft 	= this.margin?.left;
@@ -300,7 +300,7 @@ class Container extends StatelessWidget {
 		}
 
 		// Then we check for styling.
-		if(this.style !== null && this.style !== undefined) {
+		if(this.style) {
 			this.raw.style.backgroundColor 	= this.style.backgroundColor; // First, set the background Color
 			this.raw.style.height 			= this.style.height;
 			this.raw.style.width 			= this.style.width;
@@ -420,22 +420,22 @@ class Container extends StatelessWidget {
 	 * as possible in order not to waste space inside of the code. Should really not be called outside of the framework.
 	 */
 	renderChildren() {
-		if(this.raw === null || this.raw === undefined) {
+		if(!this.raw) {
 			panic("Attempted to render the children of a Widget before it's HTML viewport had been created.", this);
 		}
 
 		// After that, we attempt to render your child.
 		// Finally, if this widget was created with its list of children, we build the children and place them inside the container.
-		if(this.children !== null && this.children !== undefined) {
+		if(this.children) {
 			this.children.forEach(child => {
 				let widget = child.render(this); // First we render this child
 
 				// Next, if the child is not built yet... meaning this is not a Widget that is directly drawn.
 				// This means that the Widget in question is a ghost widget, hence not drawn. This is a necessary
 				// optimization so the HTML viewport is not filled with unnecessary views.
-				while(!widget.mounted) {
+				while(!widget || !widget.mounted) {
 					// Stop if at some point things just begin to get weird.
-					if(widget === null || widget === undefined) {
+					if(!widget) {
 						throw("Attempted to rendering an undefined widget. Cannot pass null or undefined as the result for render.");
 					}
 

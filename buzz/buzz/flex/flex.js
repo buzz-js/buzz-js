@@ -143,11 +143,11 @@ class Flex extends Container {
 
 		// Work with the flex direction.
 		if(this.direction === Flex.directionHorizontal) {
-			this.raw.style.flexDirection = this.reversed ? 'row-reverse' : 'row';
+			this.raw.style.flexDirection = this.reversed === true ? 'row-reverse' : 'row';
 		}
 
 		else if(this.direction === Flex.directionVertical) {
-			this.raw.style.flexDirection = this.reversed ? 'column-reverse' : 'column';
+			this.raw.style.flexDirection = this.reversed === true ? 'column-reverse' : 'column';
 		}
 
 		else {
@@ -158,17 +158,17 @@ class Flex extends Container {
 
 
 		// Next, we handle the main axis alignment.
-		if(this.mainAxisAlignment !== null && this.mainAxisAlignment !== undefined) { // If there is any main axis alignment specified.
+		if(this.mainAxisAlignment) { // If there is any main axis alignment specified.
 			this.raw.style.justifyContent = this.mainAxisAlignment;
 		}
 
 		// Net we handle the cross axis alignment.
-		if(this.crossAxisAlignment !== null && this.crossAxisAlignment !== undefined) {
+		if(this.crossAxisAlignment) {
 			this.raw.style.alignItems = this.crossAxisAlignment;
 		}
 
 		// Next, we apply content justification.
-		if(this.alignContent !== null && this.alignContent !== undefined) {
+		if(this.alignContent) {
 			this.raw.style.alignContent = this.contentAlignment;
 		}
 

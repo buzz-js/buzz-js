@@ -8,7 +8,10 @@ import { ContainerStyle } from "../buzz/framework/container.js";
 import { Alignment } from "../buzz/alignment/alignment.js";
 import { Column } from "../buzz/flex/column.js";
 import { SizedBox } from '../buzz/box/sized.js';
+import { Icon, IconAnimation } from '../buzz/icon/icon.js';
+import { BrandIcons, SolidIcons } from '../buzz/icon/data.js';
 import { ImageFit, ImageGeometry, ImageStyle, ImageView } from "../buzz/image/image.js";
+import { AnimationController } from "../buzz/animation/anim.js";
 
 class HomePage extends StatefulWidget {
 	/**
@@ -126,6 +129,32 @@ class HomePage extends StatefulWidget {
 							shape: ImageGeometry.geometryCircular,
 							fit: ImageFit.cover,
 						})
+					}),
+
+					new Icon(BrandIcons.github, {
+						size: '2em',
+						animation: new IconAnimation(
+							IconAnimation.TYPE_SPIN, {
+								duration: '1.5s',
+								delay: '0',
+								// iterations: 'infinite',
+								direction: "reverse",
+								controller: new AnimationController({
+									onAnimationStart: () => {
+										console.log("Animation Started");
+									},
+
+									onAnimationEnd: () => {
+										console.log("Animation ended");
+									}
+								}),
+								scalar1: 1,
+								scalar2: 0,
+								scalar3: 0.001,
+								scalar4: '30deg',
+							}
+						),
+						color: '#090958',
 					})
 				]
 			})

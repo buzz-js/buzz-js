@@ -10,7 +10,7 @@ class ColoredBox extends LeafContainer {
 			backgroundColor: color,
 		}));
 
-		if(color === null || color === undefined) {
+		if(!color) {
 			panic("Attempt to create a ColoredBox without a specified color.", this);
 		}
 

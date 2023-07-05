@@ -1,39 +1,3 @@
-import { BuzzStyleAttribute } from "./native.js";
-
-class CSSDimension  extends BuzzStyleAttribute {
-	static PIXELS = "px";
-	static PERCENT = "%";
-	static SCREEN_WIDTH = "vw";
-	static SCREEN_HEIGHT = "vh";
-	static EM;
-
-	/**
-	 * 
-	 * @param {number} value 
-	 * @param {string} unit 
-	 */
-	static buildFrom(value, {
-		unit = this.UNIT_PIXELS
-	} = {}) {
-		let ret = value.toString();
-
-		switch(unit) {
-			case PERCENT:
-			case PIXELS:
-			case SCREEN_WIDTH:
-			case SCREEN_HEIGHT: {
-				ret += unit;
-			}	break;
-
-			default: {
-				throw("Invalid CSS dimension");
-			}
-		}
-
-		return ret;
-	}
-}
-
 class InsetsGeometry {
 	static zero = InsetsGeometry.all('0');
 	
@@ -184,6 +148,5 @@ class RadialGeometry {
 
 export {
 	InsetsGeometry,
-	RadialGeometry,
-	CSSDimension
+	RadialGeometry
 }

@@ -98,9 +98,9 @@ class BuzzApp {
 		delete buzzAppNavigationAnchor.raw;
 
 		// Map the System's navigation anchor to the root viewport.
-		buzzAppNavigationAnchor.raw = document.getElementById("buzz-container");
-		buzzAppNavigationAnchor.raw.id = "buzz-container"; // Assign the ID.
-		buzzAppNavigationAnchor.key = "buzz-container";
+		buzzAppNavigationAnchor.raw 	= document.getElementById("buzz-container");
+		buzzAppNavigationAnchor.raw.id 	= "buzz-container"; // Assign the ID.
+		buzzAppNavigationAnchor.key 	= "buzz-container";
 
 		// Keep the UID inside the controller too
 		buzzAppNavigationAnchor.controller.stack.uid = "buzz-container";
@@ -110,11 +110,15 @@ class BuzzApp {
 
 		// Moving forward, switch the router logic up.
 		window.onpopstate = (event) => {
+			// Fetch the full path of the next screen position to go to.
 			const path = window.location.pathname;
+
+			// Move backwards to this route
 			const route = this.router.onRouteDispatched(new Route(path, null));
 
 			// Next, we test just how practical this really gets.
-			console.log(event);
+			console.log("Event: " + event);
+			console.log("Route: " + route);
 		};
 	}
 }
@@ -197,11 +201,11 @@ document.addEventListener("buzz-frame-update", function (event) {
 		throw("Attempted to render an updated state for an object that is not a StatefulWidget.\n\nExpected StatefulWidget found " + cached.constructor.name);
 	}
 
-	// If we made it this far, then that widget is  in fact a StatefulWidget
-	callback.call(); // First, invoke the callback to balance of the state of the coming widget.
-
-	// Next, we say the widget is currently being built.
+	// First, we say the widget is currently being built.
 	cached.built = false;
+
+	// If we made it this far, then that widget is  in fact a StatefulWidget
+	callback.call(); // Next, invoke the callback to balance of the state of the coming widget.
 
 	/**
 	 * Render the true contents of this widget again and store it here.

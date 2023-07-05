@@ -125,7 +125,6 @@ class HomePage extends StatefulWidget {
 							width: '200px',
 							shape: ImageGeometry.geometryCircular,
 							fit: ImageFit.cover,
-							overlayColor: "#19000000",
 						})
 					})
 				]

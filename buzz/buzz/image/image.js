@@ -85,7 +85,6 @@ class ImageStyle extends WidgetStyle {
 	 * @param {string} width A valid CSS-style dimension that indicates the width of this image.
 	 * @param {BoxShadow} shadow The shadow around the geometrical scope of this image.
 	 * @param {string} shape This is the geometry we chose to give to this image.
-	 * @param {string} overlayColor A valid CSS color that represents the tint of the image.
 	 * @param {string} fit How should we fit this image inside the screen?
 	 * @param {boolean} lazy Should we load this Image in the background for you while a placeholder is currently on the screen?
 	 */
@@ -94,11 +93,10 @@ class ImageStyle extends WidgetStyle {
 		width = MATCH_CONTENT,
 		shadow = null,
 		shape  = ImageGeometry.geometryRectangle,
-		overlayColor = Colors.transparent,
 		fit = ImageFit.none,
 		lazy = false
 	} = {}) {
-		super(overlayColor, {
+		super(null, {
 			background: null,
 			height: height,
 			width: width,

@@ -1,6 +1,5 @@
 import { panic } from '../framework/utilities.js';
 import { StatelessWidget } from '../framework/widget.js';
-import { InsetsGeometry } from '../style/insets.js';
 import { MATCH_CONTENT } from '../style/style.js';
 import { TextStyle } from '../text/text.js';
 
@@ -17,7 +16,6 @@ class TextButtonStyle extends TextStyle {
 		fontColorDisabled = globalThis.buzzContext.theme.buttonTheme?.fontColorDisabled,
 		backgroundColorHover = globalThis.buzzContext.theme.buttonTheme?.backgroundColorHover,
 		fontColorHover = globalThis.buzzContext.theme.buttonTheme?.fontColorHover,
-		padding = globalThis.buzzContext.theme.buttonTheme?.padding,
 		height = MATCH_CONTENT,
 		width = MATCH_CONTENT
 	} = {}) {
@@ -36,7 +34,6 @@ class TextButtonStyle extends TextStyle {
 		this.fontColorDisabled = fontColorDisabled;
 		this.backgroundColorHover = backgroundColorHover;
 		this.fontColorHover = fontColorHover;
-		this.padding = padding;
 		this.fontSize = fontSize;
 		this.fontWeight = fontWeight;
 	}
@@ -59,7 +56,8 @@ class TextButton extends StatelessWidget {
 	onHover;
 
 	constructor(text, {
-		margin = InsetsGeometry.zero,
+		padding = globalThis.buzzContext.theme.buttonTheme?.padding,
+		margin = globalThis.buzzContext.theme.buttonTheme?.margin,
 		style = new TextButtonStyle(),
 		onClick = undefined,
 		onHover = undefined,
@@ -74,6 +72,7 @@ class TextButton extends StatelessWidget {
 		this.onClick    = function() {
 			if(onClick) onClick();
 		};
+
 		this.onHover    = function(hovering) {
 			delete this.raw;
 			this.raw = document.getElementById(this.key);
@@ -95,6 +94,7 @@ class TextButton extends StatelessWidget {
 		this.onDoubleClick= onDoubleClick;
 		this.enabled    = enabled;
 		this.margin		= margin;
+		this.padding = padding;
 		this.clickable 	= true;
 
 		// Next, create 
@@ -127,26 +127,13 @@ class TextButton extends StatelessWidget {
 			this.raw.style.cursor		= "initial";
 		}
 
-		// Next, set the margin for the child view.
-		if(this.margin) {
-			this.raw.style.marginTop 	= this.margin?.top;
-			this.raw.style.marginBottom	= this.margin?.bottom;
-			this.raw.style.marginLeft 	= this.margin?.left;
-			this.raw.style.marginRight 	= this.margin?.right;
-		}
+		// First, apply the general styling.
+		this.applyStyle();
 
 		// Now the font style
 		this.raw.style.fontSize 		= this.style.fontSize;
 		this.raw.style.fontWeight		= this.style.fontWeight;
 		this.raw.style.fontFamily		= this.style.fontFamily;
-
-
-		if(this.style.padding) {
-			this.raw.style.paddingTop 	= this.style.padding?.top;
-			this.raw.style.paddingBottom= this.style.padding?.bottom;
-			this.raw.style.paddingLeft 	= this.style.padding?.left;
-			this.raw.style.paddingRight = this.style.padding?.right;
-		}
 
 		if(this.style.border) {
 			this.raw.style.borderWidth = this.style.border.lineWidth;

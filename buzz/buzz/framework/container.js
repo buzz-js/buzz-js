@@ -45,25 +45,7 @@ class SingleChildContainer extends StatelessWidget {
 	 * be insufficient.
 	 */
 	applyStyle(canFlex = true) {
-		if(!this.raw) {
-			panic("Attempted to call applyStyle on a container that is no longer mounted.", this);
-		}
-
-		// Set the padding for the child view.
-		if(this.padding) {
-			this.raw.style.paddingTop 	= this.padding?.top;
-			this.raw.style.paddingBottom= this.padding?.bottom;
-			this.raw.style.paddingLeft 	= this.padding?.left;
-			this.raw.style.paddingRight = this.padding?.right;
-		}
-
-		// Next, set the margin for the child view.
-		if(this.margin) {
-			this.raw.style.marginTop 	= this.margin?.top;
-			this.raw.style.marginBottom	= this.margin?.bottom;
-			this.raw.style.marginLeft 	= this.margin?.left;
-			this.raw.style.marginRight 	= this.margin?.right;
-		}
+		super.applyStyle(canFlex);
 
 		// Then we check for styling.
 		if(this.style) {
@@ -279,25 +261,7 @@ class Container extends StatelessWidget {
 	 * be insufficient.
 	 */
 	applyStyle(canFlex = true) {
-		if(!this.raw) {
-			throw("Attempted to call applyStyle on a container that is no longer mounted.\nThe problematic widget is a " + this.constructor.name + " with the key " + this.key);
-		}
-
-		// Set the padding for the child view.
-		if(this.padding) {
-			this.raw.style.paddingTop 	= this.padding?.top;
-			this.raw.style.paddingBottom= this.padding?.bottom;
-			this.raw.style.paddingLeft 	= this.padding?.left;
-			this.raw.style.paddingRight = this.padding?.right;
-		}
-
-		// Next, set the margin for the child view.
-		if(this.margin) {
-			this.raw.style.marginTop 	= this.margin?.top;
-			this.raw.style.marginBottom	= this.margin?.bottom;
-			this.raw.style.marginLeft 	= this.margin?.left;
-			this.raw.style.marginRight 	= this.margin?.right;
-		}
+		super.applyStyle(canFlex);
 
 		// Then we check for styling.
 		if(this.style) {

@@ -212,6 +212,27 @@ class Widget {
 		// The default implementation returns the Widget that called it
 		return this;
 	}
+
+	applyStyle(value = false) {
+		if(!this.raw) {
+			panic("Attempted to call apply style on a Widget that has not been rendered.", this);
+		}
+
+		// Next, set the margin for the child view.
+		if(this.margin) {
+			this.raw.style.marginTop 	= this.margin?.top;
+			this.raw.style.marginBottom	= this.margin?.bottom;
+			this.raw.style.marginLeft 	= this.margin?.left;
+			this.raw.style.marginRight 	= this.margin?.right;
+		}
+
+		if(this.padding) {
+			this.raw.style.paddingTop 	= this.padding?.top;
+			this.raw.style.paddingBottom= this.padding?.bottom;
+			this.raw.style.paddingLeft 	= this.padding?.left;
+			this.raw.style.paddingRight = this.padding?.right;
+		}
+	}
 }
 
 

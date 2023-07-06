@@ -82,16 +82,13 @@ class Widget {
 	beforeRender(context) {}
 
 	/**
-	 * A function called once right after the Widget is rendered to the screen.
+	 * A function called once right after the Widget is added to render tree. Think of it
+	 * like what to do when the Widget has been bound to the render tree but it has not 
+	 * yet been drawn to the screen.
 	 *
 	 * @param {AppContext} context 
 	 */
 	async postRender(context) {
-		if(this.mounted) { // After this has been rendered, shift the raw pointer to the rendered node.
-			delete this.raw;
-			this.raw = document.getElementById(this.key);
-		}
-
 		if(context.debugLevel === DEBUG_LOG) {
 			// If this widget is not the ViewHolder of the entire application
 			if(this.key !== "buzz-container") { // Write about it to the user.

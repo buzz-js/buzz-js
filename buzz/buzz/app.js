@@ -157,7 +157,7 @@ function run(app) {
 	widget = widget.render(defaultPage);
 
 	// Now, the root widget is mounted successfully.
-	defaultPage.raw.innerHTML = widget.raw.outerHTML;
+	defaultPage.raw.appendChild(widget.raw)
 	widget.mounted = true;
 
 	// defaultPage.raw.appendChild(widget.raw);
@@ -185,107 +185,6 @@ function run(app) {
 	// Last, it is time to call the function we execute right after the widget is rendered.
 	defaultPage.postRender(app.context);
 }
-
-document.addEventListener("click", function (event) {
-	/** @type {Element} The key of the element that is being interacted with. */
-	var key = event.target.id;
-
-	// Time to retrieve the element from the registry.
-	var widget = globalThis.buzzWidgetDirectory[key];
-
-	if(!widget) {
-		return;
-	}
-
-	while(!widget.clickable) {
-		if(!widget.parent) { // If this is definitely not a Buzz Widget...
-			return;
-		}
-
-		widget = widget.parent;
-		key = widget.key;
-	}
-
-	if(widget.enabled) {
-		widget.onClick();
-	}
-});
-
-document.addEventListener("auxclick", function (event) {
-	/** @type {Element} The key of the element that is being interacted with. */
-	var key = event.target.id;
-
-	// Time to retrieve the element from the registry.
-	var widget = globalThis.buzzWidgetDirectory[key];
-
-	if(!widget) {
-		return;
-	}
-
-	while(!widget.clickable) {
-		if(!widget.parent) { // If this is definitely not a BUzz Widget.
-			return;
-		}
-
-		widget = widget.parent;
-		key = widget.key;
-	}
-
-	// Call the double click event.
-	if(widget.enabled) {
-		widget.onDoubleClick?.call();
-	}
-});
-
-document.addEventListener("mouseover", function (event) {
-	/** @type {Element} The key of the element that is being interacted with. */
-	var key = event.target.id;
-
-	// Time to retrieve the element from the registry.
-	var widget = globalThis.buzzWidgetDirectory[key];
-
-	if(!widget) {
-		return;
-	}
-
-	while(!widget.clickable) {
-		if(!widget.parent) { // If this is not a buzz widget
-			return; // Just go back.
-		}
-
-		widget = widget.parent;
-		key = widget.key;
-	}
-
-	if(widget instanceof Widget && widget.enabled) {
-		widget.onHover(true);
-	}
-});
-
-document.addEventListener("mouseout", function(event) {
-	/** @type {Element} The key of the element that is being interacted with. */
-	var key = event.target.id;
-
-	// Time to retrieve the element from the registry.
-	var widget = globalThis.buzzWidgetDirectory[key];
-
-	if(!widget) {
-		return;
-	}
-
-	while(!widget.clickable) {
-		if(!widget.parent) {
-			return;
-		}
-
-		widget = widget.parent;
-		key = widget.key;
-	}
-
-	if(widget instanceof Widget && widget.enabled) {
-		widget.onHover(false);
-	}
-});
 
 // Next, we add the even dispatch listener for UI layer updates.
 document.addEventListener("buzz-frame-update", function (event) {
@@ -374,12 +273,13 @@ document.addEventListener("buzz-frame-update", function (event) {
 	// Update the contents of the HTML inside here to the one outside here.
 	if(cached.key === rendered.key) { // If this is the same widget.
 		// Perform an update only on the state of yourself.
-		widget.outerHTML = rendered.raw.outerHTML;
+		// widget.outerHTML = rendered.raw.outerHTML;
+		widget.raw = rendered.raw; // This should work, right? 
 	}
 
 	else {
 		// Perform an update on the state of your contents.
-		widget.innerHTML = rendered.raw.outerHTML;
+		widget.appendChild(rendered.raw);
 	}
 
 	// Finally, notify the framework that this Widget has been built and mounted.

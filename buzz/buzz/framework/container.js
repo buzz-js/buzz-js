@@ -209,7 +209,7 @@ class SingleChildContainer extends StatelessWidget {
 			}
 
 			// Finally, make this the contents of the Scrollable Container
-			this.raw.innerHTML = widget.raw.outerHTML;
+			this.raw.appendChild(widget.raw);
 
 			// This widget has been mounted.
 			this.child.mounted = true;

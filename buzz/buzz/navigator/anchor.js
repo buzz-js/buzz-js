@@ -87,7 +87,7 @@ class NavigationController {
 		}
 
 		// Switch the active view to the view denoted by the widget we have as a parameter.
-		anchor.raw.innerHTML = widget.raw.outerHTML;
+		anchor.raw.appendChild(widget.raw);
 
 		// Get the current widget and unmount it.
 		const current = this.stack.data[this.stack.index];
@@ -141,7 +141,7 @@ class NavigationController {
 		const previous = this.stack.data[this.stack.index - 1].page;
 
 		// Next, we mount the previous widget on this anchor.
-		anchor.raw.innerHTML = previous.raw.outerHTML;
+		anchor.raw.appendChild(previous.raw);
 		anchor.mounted = true;
 
 		// If the previous widget was a stateful Widget,
@@ -227,7 +227,7 @@ class NavigationController {
 		const current = this.stack.data[this.stack.index].page;
 
 		// First, mount the next widget.
-		anchor.raw.innerHTML = widget.raw.outerHTML;
+		anchor.raw.appendChild(widget.raw);
 		anchor.mounted = true;
 
 		// If the Widget we were just about to mount is a Stateful Widget.

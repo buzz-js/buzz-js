@@ -36,7 +36,7 @@ class RenderObject {
 		const widget = object.render(object.context);
 
 		// Here we render the widget to the screen by binding the generated HTML code.
-		viewport.node.innerHTML = widget.raw.outerHTML;
+		viewport.node.appendChild(widget.raw);
 
 		// After this widget has been rendered, we change the value of the built state.
 		if(object instanceof StatefulWidget) {

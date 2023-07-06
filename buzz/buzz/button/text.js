@@ -62,6 +62,7 @@ class TextButton extends StatelessWidget {
 		onClick = undefined,
 		onHover = undefined,
 		onDoubleClick = undefined,
+		onLongClick = undefined,
 		enabled = true,
 	} = {}) {
 		super();
@@ -74,8 +75,8 @@ class TextButton extends StatelessWidget {
 		};
 
 		this.onHover    = function(hovering) {
-			delete this.raw;
-			this.raw = document.getElementById(this.key);
+			//delete this.raw;
+			//this.raw = document.getElementById(this.key);
 
 			if(hovering) {	
 				this.raw.style.background 	= this.style.backgroundColorHover;
@@ -91,16 +92,61 @@ class TextButton extends StatelessWidget {
 			if(onHover)  // If it is bound
 				onHover(hovering);
 		}
-		this.onDoubleClick= onDoubleClick;
+		this.onDoubleClick= function () {
+			if(onDoubleClick)
+				onDoubleClick();
+		}
+		this.onLongClick = function () {
+			if(onLongClick) 
+				onLongClick();
+		};
 		this.enabled    = enabled;
 		this.margin		= margin;
 		this.padding = padding;
-		this.clickable 	= true;
 
 		// Next, create 
 		this.raw    = document.createElement("button");
 		this.raw.classList.add("buzz-button-clickable");
 		this.raw.id = this.key;
+
+		// First bind the hover listener.
+		this.raw.addEventListener("mouseover", (ev) => {
+			this.onHover(true);
+		});
+
+		this.raw.addEventListener("mouseleave", (ev) => {
+			this.onHover(false);
+		});
+
+		this.raw.addEventListener("dblclick", (ev) => {
+			this.onDoubleClick();
+		});
+
+		this.raw.addEventListener("mousedown", (ev) => {
+			// Check the moment this started.
+			const moment = Date.now();
+
+			// First, add this to the widget.
+			this.raw.setAttribute("buzz-button-down", moment.toString());
+		});
+
+		this.raw.addEventListener("mouseup", (ev) => {
+			const moment = Date.now(); // As soon as you enter, get the current timestamp.
+			const started = Number.parseInt(this.raw.getAttribute("buzz-button-down"));
+
+			const diff = moment - started;
+
+			if(diff < 1500) { // If this is not long enough to be a long press...
+				this.onClick();
+			}
+
+			else {
+				this.onLongClick();
+			}
+
+			// Remove the attribute.
+			this.raw.removeAttribute("buzz-button-down"); 
+		});
 	}
 
 	remove(context) {
@@ -149,11 +195,15 @@ class TextButton extends StatelessWidget {
 		}
 
 		// Set the text inside the button
-		this.raw.innerHTML = this.text;
+		this.raw.innerText = this.text;
 
 		// Mount this button when you're done.
 		this.mounted = true;
 		return this;
+	}
+
+	postRender(context) {
+		super.postRender(context);
 	}
 }
 

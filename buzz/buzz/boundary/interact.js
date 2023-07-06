@@ -2,6 +2,46 @@ import { SingleChildContainer } from '../framework/container.js';
 import { visibilityCheck } from '../framework/utilities.js';
 import { View } from '../render/view.js';
 
+const handleMouseDown = function(_this, ev) {
+	// Check the moment this started.
+	const moment = Date.now();
+
+	// First, add this to the widget.
+	_this.raw.setAttribute("buzz-button-down", moment.toString());
+}
+
+const handleMouseUp = function(_this, ev) {
+	const moment = Date.now(); // As soon as you enter, get the current timestamp.
+	const started = Number.parseInt(_this.raw.getAttribute("buzz-button-down"));
+
+	const diff = moment - started;
+
+	if(diff < 1500) { // If this is not long enough to be a long press...
+		_this.onClick();
+	}
+
+	else {
+		_this.onLongClick();
+	}
+
+	// Remove the attribute.
+	_this.raw.removeAttribute("buzz-button-down"); 
+}
+
+const handleDoubleClick = function(_this, ev) {
+	_this.onDoubleClick();
+}
+
+const handleMouseEnter = function(_this, ev) {
+	_this.onHover(true);
+	_this.raw.setAttribute("buzz-button-hover", Date.now().toString());
+}
+
+const handleMouseLeave = function(_this, ev) {
+	_this.onHover(false);
+	_this.raw.removeAttribute("buzz-button-hover");
+}
+
 class ActionController extends SingleChildContainer {
 	/**
 	 * A function called when this ActionController is clicked. The first parameter is control down, second parameter is shift down, 
@@ -25,6 +65,14 @@ class ActionController extends SingleChildContainer {
 	 * @type {function(boolean, boolean, boolean): void}
 	 */
 	onDoubleClick;
+
+	/**
+	 * Callback made when the user clicks this action controller for over some span of
+	 * time.
+	 *
+	 * @type {function(): void}
+	 */
+	onLongClick;
 
 	constructor(child, {
 		onClick = null,
@@ -56,6 +104,27 @@ class ActionController extends SingleChildContainer {
 
 		// Next, create the viewport for this Widget.
 		this.viewport = new View(this.raw);
+
+		// Bind the listeners
+		this.raw.addEventListener("mouseover", (ev) => {
+			handleMouseEnter(this, ev);
+		});
+
+		this.raw.addEventListener("mouseleave", (ev) => {
+			handleMouseLeave(this, ev);
+		});
+
+		this.raw.addEventListener("dblclick", (ev) => {
+			handleDoubleClick(_this, ev);
+		});
+
+		this.raw.addEventListener("mousedown", (ev) => {
+			handleMouseDown(this, ev);
+		});
+
+		this.raw.addEventListener("mouseup", (ev) => {
+			handleMouseUp(this, ev);
+		});
 	}
 
 	remove(context) {

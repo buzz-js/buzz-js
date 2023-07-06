@@ -152,7 +152,35 @@ class ButtonTheme extends TextTheme {
 }
 
 class EditTextTheme extends ThemeData {
+	constructor({
+		fontColor = Colors.black,
+		iconColor = Colors.black,
+		backgroundColor = Colors.yellow,
+		borderRadius = RadialGeometry.all('10px'),
+		border = new Border({
+			lineWidth: '2px',
+			lineType: Border.LINE_SOLID,
+			color: 'black'
+		}),
+		padding = new InsetsGeometry().setVertical('0.8em').setHorizontal('2.8em'),
+		margin = InsetsGeometry.zero,
+		fontFamily = FontFamily.FONT_FAMILY_RALEWAY,
+		fontStyle = 'none',
+		fontWeight = 'bolder',
+		fontSize = '1.2em',
+	} = {}) {
+		super(fontColor, iconColor);
 
+		this.borderRadius = borderRadius;
+		this.border = border;
+		this.padding = padding;
+		this.margin = margin;
+		this.fontFamily = fontFamily;
+		this.fontStyle = fontStyle;
+		this.fontWeight = fontWeight;
+		this.backgroundColor = backgroundColor;
+		this.fontSize = fontSize;
+	}
 }
 
 class AppTheme extends ThemeData {

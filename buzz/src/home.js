@@ -36,23 +36,6 @@ class HomePage extends StatefulWidget {
 						}
 					),
 
-					new IconButton(
-						new Icon(
-							RegularIcons.calendarCheck, {
-								size: '2em',
-								color: 'yellow',
-							}
-						), {
-							onClick: () => {
-								alert("So, it works");
-							},
-
-							onHover: (hovering) => {
-								console.log(hovering ? "Still on top" : "Not on top");
-							}
-						}
-					),
-
 					new ImageView(
 						"res/image.jpg", {
 							margin: InsetsGeometry.only({bottom: '6em'}),

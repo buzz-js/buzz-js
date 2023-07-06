@@ -46,7 +46,7 @@ Date Concluded:
 21. ~~Implement the SizedBox widget for constraining the Size of its child~~
 22. ~~Implement the ScrollableContainer widget to allow us to make scrollable screens.~~
 23. Implement TextInput Widget for different design languages, including MAD (Mile-Age Design language) that Buzz uses straight out of the box.
-24. Implement IconButton Widget
+24. ~~Implement IconButton Widget~~
 25. ~~Implement TextButton Widget~~
 26. Implement ProgressIndicator, CircularProgressIndicator, and LinearProgressIndicator widgets.
 27. Implement ProgressButton Widget

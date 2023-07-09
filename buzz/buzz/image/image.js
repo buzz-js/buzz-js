@@ -1,7 +1,6 @@
 import { panic } from '../framework/utilities.js';
 import { StatelessWidget } from '../framework/widget.js';
 import { GONE, INVISIBLE } from '../render/view.js';
-import { Colors } from '../style/color.js';
 import { BuzzStyleAttribute } from '../style/native.js';
 import { MATCH_CONTENT, WidgetStyle } from '../style/style.js';
 
@@ -142,6 +141,9 @@ class ImageView extends StatelessWidget {
 		this.raw.src = this.src;
 		this.raw.alt = this.alt;
 
+		// First, apply the base style of this object.
+		this.applyStyle();
+
 		// Images are not allowed to go past the width of their containers
 		this.raw.style.maxWidth = '100%';
 
@@ -149,22 +151,6 @@ class ImageView extends StatelessWidget {
 		if(this.style !== null && this.style !== undefined) {
 			this.raw.style.height = this.style.height;
 			this.raw.style.width = this.style.width;
-
-			// Apply the margin
-			if(this.margin !== null && this.margin !== undefined) {
-				this.raw.style.marginTop 	= this.margin?.top;
-				this.raw.style.marginBottom= this.margin?.bottom;
-				this.raw.style.marginLeft 	= this.margin?.left;
-				this.raw.style.marginRight = this.margin?.right;
-			}
-
-			// Next, apply the padding.
-			if(this.padding !== null && this.padding !== undefined) {
-				this.raw.style.paddingTop 	= this.padding?.top;
-				this.raw.style.paddingBottom= this.padding?.bottom;
-				this.raw.style.paddingLeft 	= this.padding?.left;
-				this.raw.style.paddingRight = this.padding?.right;
-			}
 
 			if(this.style.shape === ImageGeometry.geometryCircular) {
 				this.raw.style.clipPath = "circle()";

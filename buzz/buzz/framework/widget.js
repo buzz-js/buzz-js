@@ -217,17 +217,36 @@ class Widget {
 
 		// Next, set the margin for the child view.
 		if(this.margin) {
-			this.raw.style.marginTop 	= this.margin?.top;
-			this.raw.style.marginBottom	= this.margin?.bottom;
-			this.raw.style.marginLeft 	= this.margin?.left;
-			this.raw.style.marginRight 	= this.margin?.right;
+			this.raw.style.marginTop 	= this.margin.top;
+			this.raw.style.marginBottom	= this.margin.bottom;
+			this.raw.style.marginLeft 	= this.margin.left;
+			this.raw.style.marginRight 	= this.margin.right;
 		}
 
 		if(this.padding) {
-			this.raw.style.paddingTop 	= this.padding?.top;
-			this.raw.style.paddingBottom= this.padding?.bottom;
-			this.raw.style.paddingLeft 	= this.padding?.left;
-			this.raw.style.paddingRight = this.padding?.right;
+			this.raw.style.paddingTop 	= this.padding.top;
+			this.raw.style.paddingBottom= this.padding.bottom;
+			this.raw.style.paddingLeft 	= this.padding.left;
+			this.raw.style.paddingRight = this.padding.right;
+		}
+
+		if(this.style.border) {
+			this.raw.style.borderWidth = this.style.border.lineWidth;
+			this.raw.style.borderColor = this.style.border.color;
+			this.raw.style.borderStyle = this.style.border.lineType;
+		}
+
+		if(this.style.borderRadius) {
+			this.raw.style.borderTopLeftRadius 		= this.style.borderRadius.topLeft;
+			this.raw.style.borderTopRightRadius 	= this.style.borderRadius.topRight;
+			this.raw.style.borderBottomLeftRadius 	= this.style.borderRadius.bottomLeft;
+			this.raw.style.borderBottomRightRadius 	= this.style.borderRadius.bottomRight; 
+		}
+
+		if(this.style.shadow) {
+			// Thankfully, JavaScript does not demand we import this otherwise,
+			// it'd have been a cyclic import nightmare.
+			this.raw.style.boxShadow = this.style.shadow.toStylesheet();
 		}
 	}
 }

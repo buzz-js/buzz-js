@@ -1,7 +1,6 @@
 import { Container, ContainerStyle } from "../framework/container.js";
 import { panic, visibilityCheck } from "../framework/utilities.js";
 import { View } from "../render/view.js";
-import { Colors } from "../style/color.js";
 import { BuzzStyleAttribute } from "../style/native.js";
 import { MATCH_CONTENT } from "../style/style.js";
 import { Flexible } from "./flexible.js";
@@ -97,7 +96,7 @@ class Flex extends Container {
 		children = null,
 		reversed = false,
 		style = new ContainerStyle({
-			backgroundColor: Colors.transparent,
+			backgroundColor: 'transparent',
 			height: MATCH_CONTENT,
 			width: MATCH_CONTENT
 		}),

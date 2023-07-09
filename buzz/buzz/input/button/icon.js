@@ -1,7 +1,7 @@
-import { StatelessWidget } from "../framework/widget.js";
-import { Icon } from "../icon/icon.js";
-import { TextButtonStyle } from '../button/text.js';
-import { InsetsGeometry } from "../style/insets.js";
+import { StatelessWidget } from "../../framework/widget.js";
+import { Icon } from "../../icon/icon.js";
+import { TextButtonStyle } from './text.js';
+import { InsetsGeometry } from "../../style/insets.js";
 
 
 const handleMouseDown = function(_this, ev) {

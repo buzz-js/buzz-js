@@ -1,4 +1,3 @@
-import { Colors } from './color.js';
 import { InsetsGeometry, RadialGeometry } from './insets.js';
 import { Border } from './border.js';
 import { FontFamily } from '../text/font.js';
@@ -20,7 +19,7 @@ class ThemeData {
 	iconColor;
 
 
-	constructor(fontColor = Colors.black, iconColor = Colors.black) {
+	constructor(fontColor = 'black', iconColor = 'black') {
 		this.fontColor = fontColor;
 		this.iconColor = iconColor;
 	}
@@ -76,8 +75,8 @@ class TextTheme extends ThemeData {
 	fontWeight;
 
 	constructor({
-		fontColor = Colors.black,
-		iconColor = Colors.black,
+		fontColor = 'black',
+		iconColor = 'black',
 		fontSize =  '1em',
 		borderRadius = RadialGeometry.all('1em'),
 		border = Border.none,
@@ -86,7 +85,7 @@ class TextTheme extends ThemeData {
 		fontFamily = FontFamily.FONT_FAMILY_RALEWAY,
 		fontStyle = 'none',
 		fontWeight = 'normal',
-		backgroundColor = Colors.yellow,
+		backgroundColor = 'yellow',
 	} = {}) {
 		super(fontColor, iconColor);
 
@@ -109,8 +108,8 @@ class ButtonTheme extends TextTheme {
 	textDecorationDisabled;
 
 	constructor({
-		fontColor = Colors.black,
-		iconColor = Colors.black,
+		fontColor = 'black',
+		iconColor = 'black',
 		borderRadius = RadialGeometry.all('10px'),
 		border = Border.none,
 		padding = new InsetsGeometry().setVertical('0.8em').setHorizontal('2.8em'),
@@ -123,7 +122,7 @@ class ButtonTheme extends TextTheme {
 		backgroundColorDisabled = "#777777",
 		backgroundColorHover = "black",
 		fontColorHover = "yellow",
-		backgroundColor = Colors.yellow,
+		backgroundColor = 'yellow',
 		textStyleDisabled = "none",
 		textDecorationDisabled = "none",
 	} = {}) {
@@ -153,9 +152,9 @@ class ButtonTheme extends TextTheme {
 
 class EditTextTheme extends ThemeData {
 	constructor({
-		fontColor = Colors.black,
-		iconColor = Colors.black,
-		backgroundColor = Colors.yellow,
+		fontColor = 'black',
+		iconColor = 'black',
+		backgroundColor = 'yellow',
 		borderRadius = RadialGeometry.all('10px'),
 		border = new Border({
 			lineWidth: '2px',
@@ -240,10 +239,10 @@ class AppTheme extends ThemeData {
 
 
 	constructor(
-		fontColor = Colors.black,{
-		primaryColor = Colors.black, 
-		secondaryColor = Colors.yellow,
-		accentColor = Colors.black,  
+		fontColor = 'black',{
+		primaryColor = 'black', 
+		secondaryColor = 'yellow',
+		accentColor = 'black',  
 		backgroundColor = Colors.white,
 		textTheme = new TextTheme(),
 		editTextTheme = new EditTextTheme(),

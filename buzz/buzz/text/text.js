@@ -175,6 +175,9 @@ class Text extends StatelessWidget {
 		// It logically should not just be.
 		this.raw.style.overflow = 'hidden';
 
+		// First, apply the right styling to this Widget at base first.
+		this.applyStyle();
+
 		// If a this is text on a single line, I would permit scrolling horizontally.
 		if(this.maxLines > 1) {
 			// If this is a multi-line text field, do well to create a desirable kind of overflow.
@@ -189,22 +192,6 @@ class Text extends StatelessWidget {
 
 		if(this.fontSize !== null)  {
 			this.raw.style.fontSize = this.fontSize;
-		}
-
-		// Apply the margin
-		if(this.margin !== null && this.margin !== undefined) {
-			this.raw.style.marginTop 	= this.margin?.top;
-			this.raw.style.marginBottom= this.margin?.bottom;
-			this.raw.style.marginLeft 	= this.margin?.left;
-			this.raw.style.marginRight = this.margin?.right;
-		}
-
-		// Next, apply the padding.
-		if(this.padding !== null && this.padding !== undefined) {
-			this.raw.style.paddingTop 	= this.padding?.top;
-			this.raw.style.paddingBottom= this.padding?.bottom;
-			this.raw.style.paddingLeft 	= this.padding?.left;
-			this.raw.style.paddingRight = this.padding?.right;
 		}
 
 		// Moving forward, it is time for the text styling....
@@ -229,19 +216,6 @@ class Text extends StatelessWidget {
 				else {
 					this.raw.style.textOverflow = this.style.overflowType;
 				}
-			}
-
-			if(this.style.border !== null) {
-				this.raw.style.borderWidth = this.style.border.lineWidth;
-				this.raw.style.borderColor = this.style.border.color;
-				this.raw.style.borderStyle = this.style.border.lineType;
-			}
-
-			if(this.style.borderRadius !== null) {
-				this.raw.style.borderTopLeftRadius 		= this.style.borderRadius.topLeft;
-				this.raw.style.borderTopRightRadius 	= this.style.borderRadius.topRight;
-				this.raw.style.borderBottomLeftRadius 	= this.style.borderRadius.bottomLeft;
-				this.raw.style.borderBottomRightRadius 	= this.style.borderRadius.bottomRight; 
 			}
 		}
 

@@ -1,7 +1,7 @@
-import { panic } from '../framework/utilities.js';
-import { StatelessWidget } from '../framework/widget.js';
-import { MATCH_CONTENT } from '../style/style.js';
-import { TextStyle } from '../text/text.js';
+import { panic } from '../../framework/utilities.js';
+import { StatelessWidget } from '../../framework/widget.js';
+import { MATCH_CONTENT } from '../../style/style.js';
+import { TextStyle } from '../../text/text.js';
 
 class TextButtonStyle extends TextStyle {
 	constructor({

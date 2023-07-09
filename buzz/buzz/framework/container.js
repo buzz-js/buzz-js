@@ -135,23 +135,6 @@ class SingleChildContainer extends StatelessWidget {
 					console.info("Detected alignment in a container that is not flexbox-based ("+this.constructor.name+"). Switching to its implementation of an alignment if there is any.");
 				}
 			}
-
-			if(this.style.shadow) {
-				this.raw.style.boxShadow = this.style.shadow.toStylesheet();
-			}
-
-			if(this.style.border) {
-				this.raw.style.borderWidth = this.style.border?.lineWidth;
-				this.raw.style.borderColor = this.style.border?.color;
-				this.raw.style.borderStyle = this.style.border?.lineType;
-			}
-
-			if(this.style.borderRadius) {
-				this.raw.style.borderTopLeftRadius 		= this.style.borderRadius?.topLeft;
-				this.raw.style.borderTopRightRadius 	= this.style.borderRadius?.topRight;
-				this.raw.style.borderBottomLeftRadius 	= this.style.borderRadius?.bottomLeft;
-				this.raw.style.borderBottomRightRadius 	= this.style.borderRadius?.bottomRight; 
-			}
 		}
 
 		// Now, to apply default styling to this Widget...
@@ -275,7 +258,6 @@ class Container extends StatelessWidget {
 					case Alignment.bottomCenter.value: {
 						this.raw.style.alignItems = "end"; // Align the items inside the view to the end vertically
 						this.raw.style.justifyContent = "center"; // Align the items inside the view to the center horizontally
-	
 						this.raw.style.display = 'flex';
 					}	break;
 	
@@ -350,23 +332,6 @@ class Container extends StatelessWidget {
 				if(this.context.debugLevel === DEBUG_LOG) {
 					console.info("Detected alignment in a container that is not flexbox-based ("+this.constructor.name+"). Switching to its implementation of an alignment if there is any.");
 				}
-			}
-
-			if(this.style.shadow !== null && this.style.shadow !== undefined) {
-				this.raw.style.boxShadow = this.style.shadow.toStylesheet();
-			}
-
-			if(this.style.border !== null && this.style.border !== undefined) {
-				this.raw.style.borderWidth = this.style.border?.lineWidth;
-				this.raw.style.borderColor = this.style.border?.color;
-				this.raw.style.borderStyle = this.style.border?.lineType;
-			}
-
-			if(this.style.borderRadius !== null && this.style.borderRadius !== undefined) {
-				this.raw.style.borderTopLeftRadius 		= this.style.borderRadius?.topLeft;
-				this.raw.style.borderTopRightRadius 	= this.style.borderRadius?.topRight;
-				this.raw.style.borderBottomLeftRadius 	= this.style.borderRadius?.bottomLeft;
-				this.raw.style.borderBottomRightRadius 	= this.style.borderRadius?.bottomRight; 
 			}
 		}
 

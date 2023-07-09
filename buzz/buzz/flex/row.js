@@ -1,5 +1,4 @@
 import { ContainerStyle } from "../framework/container.js";
-import { Colors } from "../style/color.js";
 import { MATCH_CONTENT } from "../style/style.js";
 import { Flex, FlexAlignment } from "./flex.js";
 
@@ -19,7 +18,7 @@ class Row extends Flex {
 		margin = undefined,
 		padding = undefined,
 		style = new ContainerStyle({
-			backgroundColor: Colors.transparent,
+			backgroundColor: 'transparent',
 			height: MATCH_CONTENT,
 			width: MATCH_CONTENT
 		}),

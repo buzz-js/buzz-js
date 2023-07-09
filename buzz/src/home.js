@@ -10,9 +10,9 @@ import { Row } from "../buzz/flex/row.js";
 import { Icon } from '../buzz/icon/icon.js';
 import { ActionController } from '../buzz/boundary/interact.js';
 import { RegularIcons, SolidIcons } from '../buzz/icon/data.js';
-import { IconButton } from '../buzz/button/icon.js'; 
+import { IconButton } from '../buzz/input/button/icon.js'; 
 import { ImageFit, ImageGeometry, ImageStyle, ImageView } from "../buzz/image/image.js";
-import { TextButton, TextButtonStyle } from "../buzz/button/text.js"
+import { TextButton, TextButtonStyle } from "../buzz/input/button/text.js"
 
 class HomePage extends StatefulWidget {
 	render(parent) {

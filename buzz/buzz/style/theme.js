@@ -153,6 +153,7 @@ class ButtonTheme extends TextTheme {
 class EditTextTheme extends ThemeData {
 	constructor({
 		fontColor = 'black',
+		fontColorHint = 'gray',
 		iconColor = 'black',
 		backgroundColor = 'yellow',
 		borderRadius = RadialGeometry.all('10px'),
@@ -161,7 +162,7 @@ class EditTextTheme extends ThemeData {
 			lineType: Border.LINE_SOLID,
 			color: 'black'
 		}),
-		padding = new InsetsGeometry().setVertical('0.8em').setHorizontal('2.8em'),
+		padding = new InsetsGeometry().setVertical('0.8em').setHorizontal('0.8em'),
 		margin = InsetsGeometry.zero,
 		fontFamily = FontFamily.FONT_FAMILY_RALEWAY,
 		fontStyle = 'none',

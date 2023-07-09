@@ -1,6 +1,7 @@
 import { StatelessWidget} from '../framework/widget.js';
 import { NativeStyleElement } from '../style/native.js';
 import { AnimationController } from '../animation/anim.js';
+import { InsetsGeometry } from '../style/insets.js';
 
 /**
  * The Buzz class that controls icons and their animations. Typically, this is 
@@ -199,13 +200,125 @@ class IconAnimation extends NativeStyleElement {
 	}
 }
 
+function styleIcon(icon) {
+	// Now, we split this icon to different small groups.
+	let classes = icon.data.split(' ');
+
+	// First order of events is to add this to the class list.
+	classes.forEach(element => {
+		icon.raw.classList.add(element);
+	});
+
+	// Next, apply the generic styles.
+	icon.applyStyle();
+
+	// Next, bind the styling.
+	icon.raw.style.color = icon.color;
+	icon.raw.style.fontSize = icon.size;
+
+	if(icon.animation && icon.animation instanceof IconAnimation) { // If this animation is actually useful.
+		// First, we set the attributes that remain fairly constant throughout the versions.
+		icon.raw.style.setProperty("--fa-animation-duration", icon.animation.duration);
+		icon.raw.style.setProperty('--fa-animation-delay',	icon.animation.delay);
+		icon.raw.style.setProperty("--fa-animation-timing", icon.animation.timing);
+		icon.raw.style.setProperty("--fa-animation-iteration-count", icon.animation.iterations);
+		icon.raw.style.setProperty("--fa-animation-direction", icon.animation.direction);
+
+		// Next, assign the class value to icon animation.
+		icon.raw.classList.add(icon.animation.type);
+
+		// Finally, it is time to handle the icon animation customization.
+		switch(icon.animation.type) {
+			case IconAnimation.TYPE_BEAT: {
+				icon.raw.style.setProperty("--fa-beat-scale", icon.animation.scalar1);
+			}	break;
+
+			case IconAnimation.TYPE_BOUNCE: {
+				icon.raw.style.setProperty("--fa-bounce-rebound", icon.animation.scalar1);
+				icon.raw.style.setProperty("--fa-bounce-height", icon.animation.scalar2);
+				icon.raw.style.setProperty("--fa-bounce-start-scale-x", icon.animation.scalar3);
+				icon.raw.style.setProperty("--fa-bounce-start-scale-y", icon.animation.scalar4);
+				icon.raw.style.setProperty("--fa-bounce-jump-scale-x", icon.animation.scalar5);
+				icon.raw.style.setProperty("--fa-bounce-jump-scale-y", icon.animation.scalar6);
+				icon.raw.style.setProperty("--fa-bounce-land-scale-x", icon.animation.scalar7);
+				icon.raw.style.setProperty("--fa-bounce-land-scale-y", icon.animation.scalar8);
+			}	break;
+
+			case IconAnimation.TYPE_PULSE: {
+				icon.raw.style.setProperty("--fa-beat-fade-opacity", icon.animation.scalar1);
+				icon.raw.style.setProperty("--fa-beat-fade-scale", icon.animation.scalar2);
+			}	break;
+
+			case IconAnimation.TYPE_ROTATE: {
+				icon.raw.style.setProperty("--fa-flip-x", icon.animation.scalar1);
+				icon.raw.style.setProperty("--fa-flip-y", icon.animation.scalar2);
+				icon.raw.style.setProperty("--fa-flip-z", icon.animation.scalar3);
+				icon.raw.style.setProperty("--fa-flip-angle", icon.animation.scalar4);
+			}	break;
+
+			case IconAnimation.TYPE_SHAKE: {
+				if(icon.animation.scalar1 === 1) {
+					icon.raw.classList.add(IconAnimation.TYPE_SHAKE);
+				}					
+
+				else {
+					icon.raw.classList.remove(IconAnimation.TYPE_SHAKE);
+				}
+			}	break;
+
+			case IconAnimation.TYPE_SPIN: {
+				if(icon.animation.scalar1 === 1) {
+					icon.animation.controller?.onAnimationStart.call();
+				}
+
+				if(icon.animation.progressive === true) {
+					icon.raw.classList.remove(IconAnimation.TYPE_SPIN);
+					icon.raw.classList.add("fa-spin-pulse");
+				}
+
+				if(icon.animation.scalar1 === 0) {
+					icon.raw.classList.remove(IconAnimation.TYPE_SPIN);
+					icon.raw.classList.remove("fa-spin-pulse");
+					icon.raw.classList.remove("fa-spin-reverse");
+					icon.animation.controller?.onAnimationEnd.call();
+				}
+
+				if(icon.animation.direction === "reverse") {
+					icon.raw.classList.add("fa-spin-reverse");
+				}
+			}	break;
+
+			default: {
+				console.error(`The animation type ${icon.animation.type} is not recognized by this version of Buzz.`);
+			}	break;
+		}
+	}
+}
+
+/**
+ * 
+ * @param {Icon} icon 
+ */
+function createIconElement(icon) {
+	icon.raw = document.createElement("i");
+	icon.raw.id = icon.key; 
+
+	// If this is not a spin animation...
+	if(icon.animation && icon.animation.type !== IconAnimation.TYPE_SPIN) {
+
+		// Now, let's call the animation end function.
+		icon.raw.addEventListener("animationend", (_) => {
+			icon.animation?.controller.onAnimationEnd?.call(); // Call the animation end function.				
+		});
+
+		// This is animation start callback. This fails because... dammit.
+		icon.raw.addEventListener("animationstart", (_) => {
+			icon.animation?.controller.onAnimationStart.call();
+		});
+	}
+}
+
 class Icon extends StatelessWidget {
-	/**
-	 * The specific icon inside this icon file.
-	 *
-	 * @type {string}
-	 */
-	data;
 
 	/**
 	 * This is the animation to bind to this icon specifically.
@@ -214,11 +327,27 @@ class Icon extends StatelessWidget {
 	 */
 	animation;
 
+
+	/**
+	 * The specific icon inside this icon file.
+	 *
+	 * @param {string} value
+	 */
+	data;
+
+	/**
+	 * The color of this icon.
+	 * @param {string}
+	 */
+	color;
+
 	// This is the constructor of the icon itself that is to be rendered to the screen.
 	constructor(data, {
 		size 		=	'1em', // This defaults to the device size for one character on screen.
 		animation	= 	undefined, // This is not defined because we do not really need this animation to move by default.
 		color 		=	globalThis.buzzContext.theme.secondaryColor, // This defaults to the secondary color of your app.
+		margin		=   InsetsGeometry.zero,
+		padding		=	InsetsGeometry.zero
 	} = {}) {
 		super();
 
@@ -227,104 +356,18 @@ class Icon extends StatelessWidget {
 		this.size = size;
 		this.color = color;
 		this.animation = animation;
+		this.margin = margin;
+		this.padding = padding;
 
 		// Next, we create the HTML element.
-		this.raw = document.createElement("i");
-		this.raw.id = this.key; 
+		createIconElement(this);
 	}
 
 	render(parent) {
 		super.render(parent); // First, call the super function.
 
-		// Now, we split this icon to different small groups.
-		let classes = this.data.split(' ');
-
-		// First order of events is to add this to the class list.
-		classes.forEach(element => {
-			this.raw.classList.add(element);
-		});
-
-		// Next, bind the styling.
-		this.raw.style.color = this.color;
-		this.raw.style.fontSize = this.size;
-
-		if(this.animation && this.animation instanceof IconAnimation) { // If this animation is actually useful.
-			// First, we set the attributes that remain fairly constant throughout the versions.
-			this.raw.style.setProperty("--fa-animation-duration", this.animation.duration);
-			this.raw.style.setProperty('--fa-animation-delay',	this.animation.delay);
-			this.raw.style.setProperty("--fa-animation-timing", this.animation.timing);
-			this.raw.style.setProperty("--fa-animation-iteration-count", this.animation.iterations);
-			this.raw.style.setProperty("--fa-animation-direction", this.animation.direction);
-
-			// Next, assign the class value to this animation.
-			this.raw.classList.add(this.animation.type);
-
-			// Finally, it is time to handle the icon animation customization.
-			switch(this.animation.type) {
-				case IconAnimation.TYPE_BEAT: {
-					this.raw.style.setProperty("--fa-beat-scale", this.animation.scalar1);
-				}	break;
-
-				case IconAnimation.TYPE_BOUNCE: {
-					this.raw.style.setProperty("--fa-bounce-rebound", this.animation.scalar1);
-					this.raw.style.setProperty("--fa-bounce-height", this.animation.scalar2);
-					this.raw.style.setProperty("--fa-bounce-start-scale-x", this.animation.scalar3);
-					this.raw.style.setProperty("--fa-bounce-start-scale-y", this.animation.scalar4);
-					this.raw.style.setProperty("--fa-bounce-jump-scale-x", this.animation.scalar5);
-					this.raw.style.setProperty("--fa-bounce-jump-scale-y", this.animation.scalar6);
-					this.raw.style.setProperty("--fa-bounce-land-scale-x", this.animation.scalar7);
-					this.raw.style.setProperty("--fa-bounce-land-scale-y", this.animation.scalar8);
-				}	break;
-
-				case IconAnimation.TYPE_PULSE: {
-					this.raw.style.setProperty("--fa-beat-fade-opacity", this.animation.scalar1);
-					this.raw.style.setProperty("--fa-beat-fade-scale", this.animation.scalar2);
-				}	break;
-
-				case IconAnimation.TYPE_ROTATE: {
-					this.raw.style.setProperty("--fa-flip-x", this.animation.scalar1);
-					this.raw.style.setProperty("--fa-flip-y", this.animation.scalar2);
-					this.raw.style.setProperty("--fa-flip-z", this.animation.scalar3);
-					this.raw.style.setProperty("--fa-flip-angle", this.animation.scalar4);
-				}	break;
-
-				case IconAnimation.TYPE_SHAKE: {
-					if(this.animation.scalar1 === 1) {
-						this.raw.classList.add(IconAnimation.TYPE_SHAKE);
-					}					
-
-					else {
-						this.raw.classList.remove(IconAnimation.TYPE_SHAKE);
-					}
-				}	break;
-
-				case IconAnimation.TYPE_SPIN: {
-					if(this.animation.scalar1 === 1) {
-						this.animation.controller?.onAnimationStart.call();
-					}
-
-					if(this.animation.progressive === true) {
-						this.raw.classList.remove(IconAnimation.TYPE_SPIN);
-						this.raw.classList.add("fa-spin-pulse");
-					}
-
-					if(this.animation.scalar1 === 0) {
-						this.raw.classList.remove(IconAnimation.TYPE_SPIN);
-						this.raw.classList.remove("fa-spin-pulse");
-						this.raw.classList.remove("fa-spin-reverse");
-						this.animation.controller?.onAnimationEnd.call();
-					}
-
-					if(this.animation.direction === "reverse") {
-						this.raw.classList.add("fa-spin-reverse");
-					}
-				}	break;
-
-				default: {
-					console.error(`The animation type ${this.animation.type} is not recognized by this version of Buzz.`);
-				}	break;
-			}
-		} 
+		// Style the icon
+		styleIcon(this);
 
 		// Now this is mounted and we can return it.
 		this.mounted = true;
@@ -333,20 +376,28 @@ class Icon extends StatelessWidget {
 
 	postRender(context) {
 		super.postRender(context);
+	}
 
-		if(this.animation.type !== IconAnimation.TYPE_SPIN) {
-			const icon = this;
-
-			// Now, let's call the animation end function.
-			this.raw.addEventListener("animationend", (_) => {
-				icon.animation?.controller.onAnimationEnd.call(); // Call the animation end function.				
-			});
-
-			// This is animation start callback. This fails because... dammit.
-			this.raw.addEventListener("animationstart", (_) => {
-				icon.animation?.controller.onAnimationStart.call();
-			});
+	update({
+		data = this.data,
+		color = this.color
+	} = {}) {
+		if(data === this.data && color ===this.color) {
+			return; // If nothing has changed, why bother?
 		}
+
+		// Update this information.
+		this.data = data;
+		this.color = color;
+
+		// Create a new element for this icon.
+		createIconElement(this);
+
+		// Then style this element.
+		styleIcon(this);
+
+		// Just replace this directly.
+		document.getElementById(this.key).replaceWith(this.raw);
 	}
 }
 

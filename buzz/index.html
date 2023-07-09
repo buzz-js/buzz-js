@@ -31,12 +31,16 @@
 	<style>
 		* {
 			box-sizing: border-box;
+			border: none;
 		}
 
 		.buzz-button-clickable {
 			transition-property: all;
 			transition-duration: .3s; /* Change this to make all the buttons in your buzz app transition with a different timing. */
 			transition-timing-function: linear;
+		}
+
+		.buzz-button-clickable.enabled { /* Only when a button is active do we really want it to do this. */
 			cursor: pointer; /* Anything that is clickable should have a pointer on it */
 		}
 

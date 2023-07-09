@@ -1,6 +1,6 @@
-import { SingleChildContainer } from '../framework/container.js';
-import { visibilityCheck } from '../framework/utilities.js';
-import { View } from '../render/view.js';
+import { SingleChildContainer } from '../../framework/container.js';
+import { visibilityCheck } from '../../framework/utilities.js';
+import { View } from '../../render/view.js';
 
 const handleMouseDown = function(_this, ev) {
 	// Check the moment this started.
@@ -78,6 +78,7 @@ class ActionController extends SingleChildContainer {
 		onClick = null,
 		onHover = null,
 		onDoubleClick = null,
+		onLongClick = null,
 		enabled = true,
 	} = {}) {
 		super(child);
@@ -94,6 +95,7 @@ class ActionController extends SingleChildContainer {
 			if(onHover) 
 				onHover(hovering);
 		}
+		this.onLongClick = onLongClick;
 		this.clickable = true;
 		this.enabled = enabled;
 
@@ -140,6 +142,15 @@ class ActionController extends SingleChildContainer {
 
 		// This should be flexible so we render the contents directly.
 		visibilityCheck(this, 'contents');
+
+		// Handle the err... enablement of the button 
+		if(this.enabled && (this.onClick || this.onHover || this.onDoubleClick || this.onLongClick)) {
+			this.raw.classList.add("enabled");
+		}
+
+		else {
+			this.raw.classList.remove("enabled");
+		}
 
 		// Now, render its child.
 		this.renderChild();

@@ -195,14 +195,14 @@ class Text extends StatelessWidget {
 		}
 
 		// Moving forward, it is time for the text styling....
-		if(this.style !== null) { // Inline styling takes the first precedent
+		if(this.style) { // Inline styling takes the first precedent
 			this.raw.style.color 		= this.style.color;
 			this.raw.style.fontFamily 	= this.style.fontFamily;
 			this.raw.style.fontWeight 	= this.style.fontWeight;
 			this.raw.style.width 		= this.style.width;
 			this.raw.style.height 		= this.style.height;
 
-			if(this.style.overflowType !== null && this.style.overflowType !== undefined) {
+			if(this.style.overflowType) {
 				if(this.style.overflowType === TextStyle.OVERFLOW_SCROLL) {
 					if(this.maxLines > 1) {
 						this.raw.style.overflowY = "scroll";
@@ -217,31 +217,6 @@ class Text extends StatelessWidget {
 					this.raw.style.textOverflow = this.style.overflowType;
 				}
 			}
-		}
-
-		// If there is no inline styling, and the global theme is not null....
-		else if(context.theme !== null) {
-			// Taking the long way around.
-			// The default width of any text widget is to wrap around its content.
-			this.raw.style.width = 'fit-content';
-			this.raw.style.color = context.theme.textTheme?.fontColor;
-			this.raw.style.fontFamily = context.theme.textTheme?.fontFamily;
-			this.raw.style.paddingTop = context.theme.textTheme?.padding.top;
-			this.raw.style.paddingBottom = context.theme.textTheme?.padding.bottom;
-			this.raw.style.paddingLeft = context.theme.textTheme?.padding.left;
-			this.raw.style.paddingRight = context.theme.textTheme?.padding.right;
-			this.raw.style.border = context.theme.textTheme?.border?.toStylesheet();
-		}
-
-		// If there are no presets to use, move forward like this.
-		else {
-			// Attach the default styling options to this guy.
-			this.raw.style.color = 'black';
-			this.raw.style.fontFamily = FontFamily.FONT_FAMILY_LATO;
-			this.raw.style.padding = '5px';
-
-			// The default width of any text widget is to wrap around its content.
-			this.raw.style.width = 'fit-content';
 		}
 
 		// This has been built and mounted.

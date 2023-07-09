@@ -1,7 +1,8 @@
-import { StatelessWidget } from "../../framework/widget.js";
 import { Icon } from "../../icon/icon.js";
 import { TextButtonStyle } from './text.js';
 import { InsetsGeometry } from "../../style/insets.js";
+import { panic } from "../../framework/utilities.js";
+import { StatelessWidget } from "../../framework/widget.js";
 
 
 const handleMouseDown = function(_this, ev) {
@@ -36,7 +37,13 @@ const handleMouseUp = function(_this, ev) {
 }
 
 const handleDoubleClick = function(_this, ev) {
-	_this.onDoubleClick();
+	if(_this.onDoubleClick !== null) {
+		_this.onDoubleClick();
+	}
+
+	else {
+		_this.onClick();
+	}
 }
 
 const handleMouseEnter = function(_this, ev) {
@@ -60,6 +67,11 @@ class IconButton extends StatelessWidget {
 	 */
 	onDoubleClick;
 
+    /**
+	 * @type {function()}
+	 */
+	onLongClick;
+
 	/**
 	 * @type {function()}
 	 */
@@ -70,14 +82,19 @@ class IconButton extends StatelessWidget {
 	 */
 	onHover;
 
+	getIcon() {
+		return this.icon;
+	}
+
     /**
      * 
      * @param {Icon} icon
      */
 	constructor(icon, {
+		onReactState = null,
 		style = new TextButtonStyle(),
-		padding = globalThis.buzzContext.theme.buttonTheme?.padding,
-		margin = globalThis.buzzContext.theme.buttonTheme?.margin,
+		padding = InsetsGeometry.zero,
+		margin = InsetsGeometry.zero,
 		onClick = undefined,
 		onHover = undefined,
 		onLongClick = undefined,
@@ -110,6 +127,7 @@ class IconButton extends StatelessWidget {
 		this.margin		= margin;
 		this.padding 	= padding; 
 		this.style 		= style;
+		this.onReactState = onReactState;
 
 		// Next, create the HTML element.
 		this.raw    = document.createElement("div");
@@ -126,7 +144,7 @@ class IconButton extends StatelessWidget {
 		});
 
 		this.raw.addEventListener("dblclick", (ev) => {
-			handleDoubleClick(_this, ev);
+			handleDoubleClick(this, ev);
 		});
 
 		this.raw.addEventListener("mousedown", (ev) => {
@@ -142,17 +160,32 @@ class IconButton extends StatelessWidget {
         super.render(parent);
 
 		// If this is not an Icon...
-		if(!this.icon || !this.icon instanceof Icon) {
+		if(!this.icon || !(this.icon instanceof Icon)) {
 			panic("Attempted to render an IconButton with a child that is not an Icon.", this);
 		}
 
 		// First, apply the styles that are general to these lads.
 		this.applyStyle();
 
+		// Handle the err... enablement of the button 
+		if(this.enabled && (this.onClick || this.onHover || this.onDoubleClick || this.onLongClick)) {
+			this.raw.classList.add("enabled");
+		}
+
+		else {
+			this.raw.classList.remove("enabled");
+		}
+
 		// Retrieve the Widget in question.
+		const wasMounted = this.icon.mounted;
 		const widget = this.icon.mounted ? this.icon : this.icon.render();
 		widget.parent = this;
 		widget.ancestor = this;
+
+		// If this wasn't always mounted... 
+		if(!wasMounted) {
+			this.icon.postRender(this.context);
+		}
 
 		// This marks the time to render the icon.
 		this.raw.appendChild(widget.raw);

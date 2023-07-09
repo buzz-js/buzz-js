@@ -176,6 +176,15 @@ class TextButton extends StatelessWidget {
 		// First, apply the general styling.
 		this.applyStyle();
 
+		// Handle the err... enablement of the button 
+		if(this.enabled && (this.onClick || this.onHover || this.onDoubleClick || this.onLongClick)) {
+			this.raw.classList.add("enabled");
+		}
+
+		else {
+			this.raw.classList.remove("enabled");
+		}
+
 		// Now the font style
 		this.raw.style.fontSize 		= this.style.fontSize;
 		this.raw.style.fontWeight		= this.style.fontWeight;

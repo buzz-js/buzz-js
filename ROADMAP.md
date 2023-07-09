@@ -45,7 +45,7 @@ Date Concluded:
 20. Implement the VideoView widget for displaying videos (this would be rather difficult to do desirably).
 21. ~~Implement the SizedBox widget for constraining the Size of its child~~
 22. ~~Implement the ScrollableContainer widget to allow us to make scrollable screens.~~
-23. Implement TextInput Widget 
+23. ~~Implement TextInput Widget so that implementors have a Widget that can read user input~~
 24. ~~Implement IconButton Widget~~
 25. ~~Implement TextButton Widget~~
 26. Implement ProgressIndicator, CircularProgressIndicator, and LinearProgressIndicator widgets.

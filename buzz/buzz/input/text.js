@@ -66,6 +66,7 @@ class TextInputStyle extends WidgetStyle {
         fontWeight      = globalThis.buzzContext.theme.editTextTheme?.fontWeight,
 		border          = globalThis.buzzContext.theme.editTextTheme?.border,
 		borderRadius    = globalThis.buzzContext.theme.editTextTheme?.borderRadius,
+        iconSpacing     = globalThis.buzzContext.theme.editTextTheme?.iconSpacing,
 		overflowType    = null,
         height          = '100%',
 		width           = '100%'
@@ -84,6 +85,7 @@ class TextInputStyle extends WidgetStyle {
 		this.overflowType = overflowType;
 		this.border = border;
 		this.borderRadius = borderRadius;
+        this.iconSpacing = iconSpacing;
     }
 }
 
@@ -218,6 +220,7 @@ class TextInput extends InputWidget {
         this.raw.style.alignItems = "center";
         this.raw.style.justifyContent = "stretch";
         this.raw.style.width = "100%";
+        this.raw.style.gap = '10px';
 
         // Second, create the inner container.
         this.superRaw = document.createElement("input");
@@ -225,6 +228,10 @@ class TextInput extends InputWidget {
         this.superRaw.type = type;
         this.superRaw.placeholder = hint;
         this.superRaw.name = name ? name : this.key;
+
+        // Remove the outline from this TextInput widget so that when it is
+        // selected, we are good.
+        this.superRaw.style.outline = 'none';
     }
 
 

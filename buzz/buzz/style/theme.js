@@ -154,6 +154,7 @@ class EditTextTheme extends ThemeData {
 	constructor({
 		fontColor = 'black',
 		fontColorHint = 'gray',
+		iconSpacing  = '10px',
 		iconColor = 'black',
 		backgroundColor = 'yellow',
 		borderRadius = RadialGeometry.all('10px'),
@@ -180,6 +181,8 @@ class EditTextTheme extends ThemeData {
 		this.fontWeight = fontWeight;
 		this.backgroundColor = backgroundColor;
 		this.fontSize = fontSize;
+		this.fontColorHint = fontColorHint;
+		this.iconSpacing = iconSpacing;
 	}
 }
 

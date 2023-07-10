@@ -255,6 +255,48 @@ class Widget {
 			raw.style.boxShadow = this.style.shadow.toStylesheet();
 		}
 	}
+
+	/**
+	 * Adds a CSS class to this Buzz Widget for provisional styling outside of Buzz using a
+	 * CSS file. This is supposed to assist by helping with expandability and things like 
+	 * that.
+	 *
+	 * @param {string} clazz The name of the styling class you wish to add to this Widget.
+	 * Widget.
+	 */
+	addClass(clazz) {
+		if(!this.raw) {
+			panic("Attempted to add a CSS class to a Widget that has not yet been added to the render tree.")
+		}
+
+		this.raw.classList.add(clazz);
+	}
+
+	/**
+	 * 
+	 * @param {string} clazz The class name you wish to add to this Widget.
+	 */
+	removeClass(clazz) {
+		if(!this.raw) {
+			panic("Attempted to remove a CSS class to a Widget that has not yet been added to the render tree.")
+		}
+
+		this.raw.classList.remove(clazz);
+	}
+
+	/**
+	 * Removes a CSS class if the Widget already has it. Adds the CSS class if the Widget does
+	 * not already have it.  
+	 *
+	 * @param {string} clazz The class name you wish to toggle in this Widget.
+	 */
+	toggleClass(clazz) {
+		if(!this.raw) {
+			panic("Attempted to toggle a CSS class to a Widget that has not yet been added to the render tree.")
+		}
+
+		this.raw.classList.toggle(clazz);
+	}
 }
 
 

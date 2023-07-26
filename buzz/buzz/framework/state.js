@@ -94,6 +94,20 @@ class StateController {
 
 class StatefulWidget extends Widget {
 	/**
+	 * The object that managest the state of a `StatefulWidget`. You can use this to update the state of a
+	 * StatefulWidget outside of the StatefulWidget itself. For stateful widgets that are reactive, there is
+	 * a much shorter and efficient route which typically would just assign the state to a given value.
+	 *
+	 * Most `StatefulWidget`s can be made reactive by design and whenever it is possible, I would implore you to
+	 * do so. I am guessing that if you write your code right, you would easily see performance gains of at least
+	 * 5%-10%
+	 *
+	 * Reactive state is important when the `StatefulWidget` is supposed to react to a definitive change in value before it
+	 * invalidates a previous state.
+	 * 
+	 * When a `StatefulWidget` however has multiple criteria that are required to manage its state... yeah...
+	 * you should manually call the invalidate method and pass the updates inside the callback associated with it.
+	 *
 	 * @type {StateController} 
 	 */
 	controller;

@@ -201,6 +201,22 @@ class SingleChildContainer extends StatelessWidget {
 			this.child.postRender(widget.context);
 		}
 	}
+
+	unmount(context) {
+		if(!super.unmount(context)) {
+			return false;
+		}
+
+		// If we could unmount the other Widget... that's great. We however still need something.
+		return this.child?.unmount(context); // Unmount the child too.
+	}
+
+	remove(context) {
+		super.remove(context);
+
+		// After removing yourself...
+		this.child?.remove(context); // Remove your child as well.
+	}
 }
 
 
@@ -403,6 +419,32 @@ class Container extends StatelessWidget {
 				child.postRender(widget.context);
 			});
 		}
+	}
+
+	unmount(context) {
+		if(!super.unmount(context)) {
+			return false;
+		}
+
+		let did = true;
+
+		// For each child you have.
+		children?.forEach(function (child) {
+			did = child.unmount(context);
+		});
+
+		// If we could unmount the other Widget... that's great. We however still need something.
+		return did; // Unmount the child too.
+	}
+
+	remove(context) {
+		super.remove(context);
+		// After removing yourself...
+
+		// For each child you have.
+		children?.forEach(function (child) {
+			child.remove(context); // Remove as well.
+		});
 	}
 }
 

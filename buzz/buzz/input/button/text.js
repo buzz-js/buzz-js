@@ -108,6 +108,7 @@ class TextButton extends StatelessWidget {
 		this.raw    = document.createElement("button");
 		this.raw.classList.add("buzz-button-clickable");
 		this.raw.id = this.key;
+		this.libraryWidget = true;
 
 		// First bind the hover listener.
 		this.raw.addEventListener("mouseover", (ev) => {

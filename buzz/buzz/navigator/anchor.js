@@ -86,6 +86,26 @@ class NavigationController {
 			panic("Attempted to use a NavigationController to change the contents of a Widget that is not a NavigationAnchor.", anchor);
 		}
 
+		// Now, for each child in the anchor...
+		const size = Object.freeze(anchor.raw.children.length);
+
+		// For each widget here.
+		for(let i = 0; i < size; i++) {
+			const previousRaw = anchor.raw.children.item(i);
+
+			// We have to find this widget int the global widget directory.
+			/** @type {StatefulWidget} */
+			const previous = globalThis.buzzWidgetDirectory[previousRaw.id];
+
+			// If the previous Widget still exists... 
+			if (previous) {
+				// If the previous widget has been unmounted successfully...
+				if(previous.unmount(previous.context)) {
+					previous.remove(previous.context);
+				}
+			}
+		}
+
 		// Switch the active view to the view denoted by the widget we have as a parameter.
 		anchor.raw.appendChild(widget.raw);
 
@@ -364,7 +384,8 @@ class NavigationAnchor extends StatelessWidget {
 
 		// If everything went well...
 		this.raw = document.createElement("div");
-		this.raw.id = this.key; // Assign the right ID to this Widget.
+		this.raw.id = this.key;
+		this.libraryWidget = true; // Assign the right ID to this Widget.
 		
 		// Next, create the viewport for this Widget.
 		this.viewport = new View(this.raw);

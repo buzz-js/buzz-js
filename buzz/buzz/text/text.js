@@ -148,6 +148,7 @@ class Text extends StatelessWidget {
 
 		// At this point the widget's key has been generated so this assignment is valid.
 		this.raw.id = this.key;
+		this.libraryWidget = true;
 
 		// Make the viewport.
 		this.viewport = new View(this.raw);

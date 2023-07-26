@@ -6,6 +6,8 @@ import { AppTheme, ButtonTheme, EditTextTheme, TextTheme } from "./style/theme.j
 import { StatefulWidget } from './framework/state.js';
 import { Route, Router } from './navigator/router.js';
 import { NavigationAnchor, NavigationController } from './navigator/anchor.js';
+import { PageView } from './page/base.js';
+import { panic } from './framework/utilities.js';
 
 class BuzzApp {
 	/**
@@ -144,7 +146,7 @@ function run(app) {
 	defaultPage.raw = document.getElementById("buzz-container");
 
 	// Next, the root view of any WebApp should always fill the screen.
-	defaultPage.raw.style.height = '100vh';
+	defaultPage.raw.style.minHeight = '100vh';
 	defaultPage.raw.style.width = '100vw';
 	defaultPage.raw.style.display = "block";
 	defaultPage.raw.style.overflow = 'hidden';
@@ -154,22 +156,27 @@ function run(app) {
 
 	// Now, it is time to render the contents of the page.
 	let widget = defaultPage.render(null);
+
+	if(!(widget instanceof PageView)) {
+		panic("The root widget of any application must be a Page View.", widget);
+	}
+	
+	// Since the widgets would have already rendered each other to absolute depth, just render this oe more time
+	// inwards and this would be what renders everything to completion.
 	widget = widget.render(defaultPage);
 
-	// Now, the root widget is mounted successfully.
+	// Then just render yourself 
 	defaultPage.raw.appendChild(widget.raw)
-	widget.mounted = true;
 
-	// defaultPage.raw.appendChild(widget.raw);
-
+	// This is fair enough.
 	if(widget instanceof StatefulWidget) {
 		widget.built = true;
 	}
 
 	// Finally, the size of the root widget in this view should be the same as the size of the parent widget
 	// Just because, what else would it be?
-	widget.raw.style.height = 'inherit';
-	widget.raw.style.width = 'inherit';
+	widget.raw.style.height = 'fit-content';
+	widget.raw.style.width = 'fit-content';
 
 	// Now, it is time to call the postRender function of the Widget that page renders.
 	widget.postRender(app.context);
@@ -267,14 +274,19 @@ document.addEventListener("buzz-frame-update", function (event) {
 	const widget = document.getElementById(key);
 
 	if(!widget) {
-		throw("Unable to locate any widget with the ID " + key + " therefore it was impossible to update. This might have happened because this Widget has been detached from the render tree. Before you call invalidate, you are advised to make sure the StatefulWidget you are invalidating is still mounted.");
+		throw(`Unable to locate any widget with the ID ${key} therefore it was impossible to update. This might have happened because this Widget has been detached from the render tree. Before you call invalidate, you are advised to make sure the StatefulWidget you are invalidating is still mounted.`);
 	}
 
 	// Update the contents of the HTML inside here to the one outside here.
 	if(cached.key === rendered.key) { // If this is the same widget.
+		let rwidget = globalThis.buzzWidgetDirectory[widget.id];
+
+		if (!rwidget) {
+			throw(`Unable to locate any widget with the ID ${key} therefore it was impossible to update. This might have happened because this Widget has been detached from the render tree. Before you call invalidate, you are advised to make sure the StatefulWidget you are invalidating is still mounted.`);
+		}
+
 		// Perform an update only on the state of yourself.
-		// widget.outerHTML = rendered.raw.outerHTML;
-		widget.raw = rendered.raw; // This should work, right? 
+		rwidget.raw = rendered.raw; // This should work, right? 
 	}
 
 	else {

@@ -102,7 +102,8 @@ class ActionController extends SingleChildContainer {
 		// Create the HTML viewport for this Widget
 		this.raw = document.createElement("div");
 		this.raw.classList.add("buzz-button-clickable")
-		this.raw.id = this.key; // Assign the right ID to this Widget.
+		this.raw.id = this.key;
+		this.libraryWidget = true; // Assign the right ID to this Widget.
 
 		// Next, create the viewport for this Widget.
 		this.viewport = new View(this.raw);

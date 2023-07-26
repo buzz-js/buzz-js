@@ -132,6 +132,7 @@ class ImageView extends StatelessWidget {
 		// Next, we create the HTML element.
 		this.raw = document.createElement("img");
 		this.raw.id = this.key;
+		this.libraryWidget = true;
 	}
 
 	render(parent) {

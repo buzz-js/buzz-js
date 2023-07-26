@@ -13,6 +13,7 @@ import { IconButton } from '../buzz/input/button/icon.js';
 import { ImageFit, ImageGeometry, ImageStyle, ImageView } from "../buzz/image/image.js";
 import { TextButton, TextButtonStyle } from "../buzz/input/button/text.js"
 import { TextInput, TextInputController, TextInputType } from "../buzz/input/text.js";
+import { PageView } from "../buzz/page/base.js";
 
 class HomePage extends StatefulWidget {
 	emailText = new TextInputController();
@@ -40,123 +41,129 @@ class HomePage extends StatefulWidget {
 		reactive: true
 	});
 
+	constructor() {
+		const stateController = new StateController();
+		super(stateController);
+	}
+
 	render(parent) {
 		super.render(parent);
 		
-
-		return new ScrollableContainer({
-			controller: new ScrollController(true, false),
-			style: new ContainerStyle({
-				alignment: Alignment.topCenter // Align this view to the center.
-			}),
-			child: new Column({
-				children: [
-					new Text(
-						"Login to your account", {
-							margin: InsetsGeometry.only({bottom: '2.5em'}),
-							fontSize: '2em',
-							style: new TextStyle({
-								fontColor: 'black',
-								fontWeight: 'bolder',
-							})
-						}
-					),
-
-					new ImageView(
-						"res/image.jpg", {
-							margin: InsetsGeometry.only({bottom: '6em'}),
-							style: new ImageStyle({
-								height: '13em',
-								width: '13em',
-								fit: ImageFit.cover,
-								shape: ImageGeometry.geometryCircular
-							}),
-						}
-					),
-
-					new TextInput(this.emailText, {
-						margin: InsetsGeometry.only({bottom: '0.5em'}),
-						hint: "Enter your email address",
-						type: TextInputType.email,
-						startIcon: new Icon(
-							SolidIcons.circleUser, {
-								margin: InsetsGeometry.only({right: '10px'}),
-								size: '24px'
+		return new PageView({
+			body: new ScrollableContainer({
+				controller: new ScrollController(true, false),
+				style: new ContainerStyle({
+					alignment: Alignment.topCenter // Align this view to the center.
+				}),
+				child: new Column({
+					children: [
+						new Text(
+							"Login to your account", {
+								margin: InsetsGeometry.only({bottom: '2.5em'}),
+								fontSize: '2em',
+								style: new TextStyle({
+									fontColor: 'black',
+									fontWeight: 'bolder',
+								})
 							}
 						),
-					}),
-
-					new TextInput(this.passwordText, {
-						controller: this.passwordController,
-						margin: InsetsGeometry.only({bottom: '5em'}),
-						hint: "Enter your password",
-						type: TextInputType.password,
-						startIcon: new Icon(
-							SolidIcons.anchorSecure, {
-								margin: InsetsGeometry.only({right: '10px'}),
-								size: '24px'
+	
+						new ImageView(
+							"res/image.jpg", {
+								margin: InsetsGeometry.only({bottom: '6em'}),
+								style: new ImageStyle({
+									height: '13em',
+									width: '13em',
+									fit: ImageFit.cover,
+									shape: ImageGeometry.geometryCircular
+								}),
 							}
 						),
-
-						endIcon: new IconButton(
-						new Icon(
-							SolidIcons.eyeSlash, {
-								color: 'black',
-							}
-						), {
-							onClick: () => {
-								// Yeah, just change the state of the controller.
-								this.passwordController.state = !this.passwordController.state;
-							},
-						})
-					}),
-					
-					// After the title of the page.
-					new TextButton(
-						"Log In", {
-						margin: InsetsGeometry.only({bottom: '2em'}),
-						style: new TextButtonStyle({
-							fontSize: '1.2em',
-							padding: new InsetsGeometry().setVertical('0.8em').setHorizontal('2.8em'),
-						}),
-						onClick: () => alert("Log in?")
-					}),
-
-					// Now for the registration link...
-					new Row({
-						margin: InsetsGeometry.only({bottom: '4em'}),
-						children: [
-							new Text(
-								"Don't have an account?", {
-									padding: InsetsGeometry.only({right: '0.5em'}),
-									fontSize: '0.9em',
-									style: new TextStyle({
-										fontColor: 'black',
-										fontWeight: 'bolder',
-									})
+	
+						new TextInput(this.emailText, {
+							margin: InsetsGeometry.only({bottom: '0.5em'}),
+							hint: "Enter your email address",
+							type: TextInputType.email,
+							startIcon: new Icon(
+								SolidIcons.circleUser, {
+									margin: InsetsGeometry.only({right: '10px'}),
+									size: '24px'
 								}
 							),
-
-							new ActionController(
+						}),
+	
+						new TextInput(this.passwordText, {
+							controller: this.passwordController,
+							margin: InsetsGeometry.only({bottom: '5em'}),
+							hint: "Enter your password",
+							type: TextInputType.password,
+							startIcon: new Icon(
+								SolidIcons.anchorSecure, {
+									margin: InsetsGeometry.only({right: '10px'}),
+									size: '24px'
+								}
+							),
+	
+							endIcon: new IconButton(
+							new Icon(
+								SolidIcons.eyeSlash, {
+									color: 'black',
+								}
+							), {
+								onClick: () => {
+									// Yeah, just change the state of the controller.
+									this.passwordController.state = !this.passwordController.state;
+								},
+							})
+						}),
+						
+						// After the title of the page.
+						new TextButton(
+							"Log In", {
+							margin: InsetsGeometry.only({bottom: '2em'}),
+							style: new TextButtonStyle({
+								fontSize: '1.2em',
+								padding: new InsetsGeometry().setVertical('0.8em').setHorizontal('2.8em'),
+							}),
+							onClick: () => alert("Log in?")
+						}),
+	
+						// Now for the registration link...
+						new Row({
+							margin: InsetsGeometry.only({bottom: '4em'}),
+							children: [
 								new Text(
-									"Register Now.", {
-										padding: InsetsGeometry.zero,
+									"Don't have an account?", {
+										padding: InsetsGeometry.only({right: '0.5em'}),
 										fontSize: '0.9em',
 										style: new TextStyle({
-											fontColor: 'yellow',
+											fontColor: 'black',
 											fontWeight: 'bolder',
 										})
 									}
-								), {
-								onClick: () => {
-									alert("Register User...")
-								},
-							})
-						]}
-					),
-				]
-			}),
-		});
+								),
+	
+								new ActionController(
+									new Text(
+										"Register Now.", {
+											padding: InsetsGeometry.zero,
+											fontSize: '0.9em',
+											style: new TextStyle({
+												fontColor: 'yellow',
+												fontWeight: 'bolder',
+											})
+										}
+									), {
+									onClick: () => {
+										alert("Register User...")
+									},
+								})
+							]}
+						),
+					]
+				}),
+			})
+		})
 	}
 }
 

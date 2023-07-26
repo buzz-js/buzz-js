@@ -62,7 +62,8 @@ class ScrollableContainer extends SingleChildContainer {
 
 		// Moving forward, it is time to initialize the view port.
 		this.raw = document.createElement("div");
-		this.raw.id = this.key; // The ID of this div is in fact the Buzz key of this Widget.
+		this.raw.id = this.key;
+		this.libraryWidget = true; // The ID of this div is in fact the Buzz key of this Widget.
 		
 		// Next, it is time to get up close and personal.
 		this.viewport = new View(this.raw);

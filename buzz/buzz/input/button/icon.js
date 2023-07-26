@@ -133,6 +133,7 @@ class IconButton extends StatelessWidget {
 		this.raw    = document.createElement("div");
 		this.raw.classList.add("buzz-button-clickable"); 
 		this.raw.id = this.key;
+		this.libraryWidget = true;
 
 		// Now, bind the listeners.
 		this.raw.addEventListener("mouseover", (ev) => {

@@ -18,7 +18,8 @@ class Center extends LeafContainer {
 
 		// If everything went well...
 		this.raw = document.createElement("div");
-		this.raw.id = this.key; // Assign the right ID to this Widget.
+		this.raw.id = this.key;
+		this.libraryWidget = true; // Assign the right ID to this Widget.
 		
 		// Next, create the viewport for this Widget.
 		this.viewport = new View(this.raw);

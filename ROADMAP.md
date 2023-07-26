@@ -59,9 +59,12 @@ Date Concluded:
 34. ~~Implement the Free font awesome icons~~
 35. ~~Implement the Icon widget.~~
 36. ~~Implement Icon Animation~~
-37. Implement the PageView Widget
+37. ~~Implement the PageView Widget~~
 
 # Phase 2 Goals :soccer::trophy:
-
+1. Implement the Drawer Widget
+2. Implement the NavigationBar Widget
+3. Implement the FooterWidget
+4. Implement the ExpandableListWidget
 
 # Phase 3 Goals :soccer::trophy:

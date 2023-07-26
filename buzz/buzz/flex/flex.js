@@ -125,6 +125,7 @@ class Flex extends Container {
 		// Next it is time to create the HTML Element for this dude.
 		this.raw 	= document.createElement("div");
 		this.raw.id = this.key;
+		this.libraryWidget = true;
 
 		// Next, create the viewport.
 		this.viewport = new View(this.raw);

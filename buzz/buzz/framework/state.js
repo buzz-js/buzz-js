@@ -31,7 +31,7 @@ class StateController {
 	set state(value) {
 		// Only do this if we are going for the reactive method.
 		if(!this.reactive && this.widget.context.debugLevel >= DEBUG_WARNING) {
-			console.warn("Buzz.js: Attempted to Reactively set state in an Widget that is not Reactive.");
+			panic("Buzz.js: Attempted to Reactively set state in an Widget that is not Reactive.", this.widget);
 		}
 
 		else {

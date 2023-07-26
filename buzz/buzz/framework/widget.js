@@ -147,6 +147,10 @@ class Widget {
 			console.log("Unmounted the " + this.constructor.name + " with the identifier " + this.key);
 		}
 
+		// This is expensive in terms of probability of causing undefined behaviour but 
+		// do remove the widget tfrom the Widget Directory nontheless. 
+		globalThis.buzzWidgetDirectory[this.key] = undefined;
+
 		// Return true. No matter what.
 		return true;
 	}
@@ -199,7 +203,7 @@ class Widget {
 		this.visibility = VISIBLE;
 		this.mounted = false;
 
-		if(!this.raw) {
+		if(!this.raw && this.libraryWidget) {
 			panic("At this point in time, a widget should have been initialized successfully");
 		}
 

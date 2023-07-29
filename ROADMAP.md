@@ -22,7 +22,7 @@ like cameras, geolocation, microphones, and so on. Exhales, what a long way to g
 
 # Phase 1 Goals :soccer::trophy:
 Date Started:	May 11, 2023 <br>
-Date Concluded:	
+Date Concluded:	July 25th, 2023 <br>
 01. ~~Create the application abstraction~~
 02. ~~Create the global context management system~~
 03. ~~Create the base Widget class and define its characteristics~~
@@ -41,30 +41,30 @@ Date Concluded:
 16. ~~Create helper functions to apply borders and border radius~~
 17. ~~Implement Text Widgets~~
 18. ~~Implement Text Overflows that include ellipsis~~
-29. ~~Implement the ImageView and SvgImageView widgets for displaying images.~~
-20. Implement the VideoView widget for displaying videos (this would be rather difficult to do desirably).
-21. ~~Implement the SizedBox widget for constraining the Size of its child~~
-22. ~~Implement the ScrollableContainer widget to allow us to make scrollable screens.~~
-23. ~~Implement TextInput Widget so that implementors have a Widget that can read user input~~
-24. ~~Implement IconButton Widget~~
-25. ~~Implement TextButton Widget~~
-26. Implement ProgressIndicator, CircularProgressIndicator, and LinearProgressIndicator widgets.
-27. Implement ProgressButton Widget
-28. ~~Implement an abstraction that makes it easy to write CSS-dimensions in Buzz.js~~
-29. ~~Implement ActionController widget to add input functionality to otherwise uneventful Widgets~~
-30. ~~Implement the Router, NavigationController, and NavigationAnchor classes so we would be able to switch the context of the page~~
-31. ~~Implement the ColoredBox so that it would be possible to create boxes that just have concept of color~~
-32. Implement animations and animation controllers to make everything more lively.
-33. ~~Implement the flexbox widgets Flex, Column, Row, Wrap, and Flexible.~~
-34. ~~Implement the Free font awesome icons~~
-35. ~~Implement the Icon widget.~~
-36. ~~Implement Icon Animation~~
-37. ~~Implement the PageView Widget~~
+19. ~~Implement the ImageView and SvgImageView widgets for displaying images.~~
+20. ~~Implement the SizedBox widget for constraining the Size of its child~~
+21. ~~Implement the ScrollableContainer widget to allow us to make scrollable screens.~~
+22. ~~Implement TextInput Widget so that implementors have a Widget that can read user input~~
+23. ~~Implement IconButton Widget~~
+24. ~~Implement TextButton Widget~~
+25. ~~Implement an abstraction that makes it easy to write CSS-dimensions in Buzz.js~~
+26. ~~Implement ActionController widget to add input functionality to otherwise uneventful Widgets~~
+27. ~~Implement the Router, NavigationController, and NavigationAnchor classes so we would be able to switch the context of the page~~
+28. ~~Implement the ColoredBox so that it would be possible to create boxes that just have concept of color~~
+29. Implement animations and animation controllers to make everything more lively.
+30. ~~Implement the flexbox widgets Flex, Column, Row, Wrap, and Flexible.~~
+31. ~~Implement the Free font awesome icons~~
+32. ~~Implement the Icon widget.~~
+33. ~~Implement Icon Animation~~
+34. ~~Implement the PageView Widget~~
 
 # Phase 2 Goals :soccer::trophy:
 1. Implement the Drawer Widget
 2. Implement the NavigationBar Widget
 3. Implement the FooterWidget
 4. Implement the ExpandableListWidget
+5. Implement the VideoView widget for displaying videos (this would be rather difficult to do desirably).
+6. Implement ProgressIndicator, CircularProgressIndicator, and LinearProgressIndicator widgets.
+7. Implement ProgressButton Widget
 
 # Phase 3 Goals :soccer::trophy:

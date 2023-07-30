@@ -1,8 +1,0 @@
-{
-  "extends": [
-    "development"
-  ],
-  "hints": {
-    "create-element-svg": "off"
-  }
-}

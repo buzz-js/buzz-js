@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
 
 	postRender(context) {
 		super.postRender(context);
-		console.log("After we rendered, it shall be, and it is, a potato(🥔).");
+		console.log("After we rendered, it shall be — and it is — a potato(🥔).");
 	}
 
 	render(parent) {
